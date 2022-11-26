@@ -5,6 +5,7 @@
 
 int main()
 {
+    int a;
     DVector2D v = { 3.14, 2.71};
     DEBUG_LOG(v);
     return 0;
