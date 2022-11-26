@@ -19,14 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DataTypes\basic_num_func.c" />
+    <ClCompile Include="Core\basic_num_func.c" />
+    <ClCompile Include="Core\core.c" />
     <ClCompile Include="DataTypes\dstring.c" />
     <ClCompile Include="DataTypes\dvector2D.c" />
+    <ClCompile Include="Logging\logging.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DataTypes\basic_num_func.h" />
-    <ClInclude Include="DataTypes\dbool.h" />
+    <ClInclude Include="Core\basic_num_func.h" />
+    <ClInclude Include="Core\core.h" />
     <ClInclude Include="DataTypes\dstring.h" />
     <ClInclude Include="DataTypes\dvector2D.h" />
     <ClInclude Include="Logging\logging.h" />
@@ -117,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

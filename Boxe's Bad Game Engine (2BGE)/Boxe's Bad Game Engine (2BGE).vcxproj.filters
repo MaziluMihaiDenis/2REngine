@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DataTypes\basic_num_func.c">
+    <ClCompile Include="Core\basic_num_func.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DataTypes\dstring.c">
@@ -27,12 +27,15 @@
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\core.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\logging.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DataTypes\basic_num_func.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DataTypes\dbool.h">
+    <ClInclude Include="Core\basic_num_func.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DataTypes\dstring.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Logging\logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
