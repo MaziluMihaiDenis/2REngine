@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include "DataTypes/dstring.h"
+#include "DataTypes/dvector2D.h"
+#include "Logging/logging.h"
 
 int main()
 {
-    DString str, *str1;
-    str = float_to_string(3.141592653589793);
-    printf("%s", str.text);
-
+    DVector2D v = { 3.14, 2.71};
+    DEBUG_LOG(v);
     return 0;
 }
