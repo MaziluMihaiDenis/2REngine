@@ -1,7 +1,7 @@
 #pragma once
 #include "../DataTypes/dstring.h"
 #include "../DataTypes/dvector2D.h"
-#include "../Core/core.h"
+#include "../core.h"
 
 #define DEBUG_LOG(x) _Generic((x), \
 	float: _debug_log_float, double: _debug_log_float, \
