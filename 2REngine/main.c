@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "DataTypes/dstring.h"
-#include "DataTypes/dvector2D.h"
-#include "Logging/logging.h"
+#include "Core/DataTypes/dstring.h"
+#include "Core/DataTypes/dvector2D.h"
+#include "Core/Logging/logging.h"
 
 int main()
 {
