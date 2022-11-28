@@ -3,10 +3,10 @@
 #include "Core/DataTypes/dvector2D.h"
 #include "Core/Logging/logging.h"
 
+#define MKSTR(x) #x
+
 int main()
 {
-    int a;
-    DVector2D v = { 3.14, 2.71};
-    DEBUG_LOG(v);
+    printf("%s", MKSTR(3.14));
     return 0;
 }
