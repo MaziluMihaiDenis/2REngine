@@ -1,7 +1,7 @@
 #pragma once
 #include "../DataTypes/dstring.h"
 #include "../DataTypes/dvector2D.h"
-#include "2re_platform.h"
+#include "re_platform.h"
 
 typedef struct REWindowSettings REWindowSettings;
 typedef struct RELibrary RELibrary;
@@ -18,13 +18,14 @@ struct REWindowSettings
 
 struct RELibrary
 {
-	PLATFORM_LIBRARY
+	int unused;
+	//PLATFORM_LIBRARY
 };
 
 struct REPlatform
 {
-	DBool(platform_init)();
-	REWindow(platform_create_window)(REWindowSettings*);
+	DBool(*platform_init)();
+	REWindow(*platform_create_window)(REWindowSettings*);
 };
 
 struct REWindow
@@ -33,9 +34,10 @@ struct REWindow
 	DBool fullscreen;
 	REWindowSettings settings;
 
-	PLATFORM_WINDOW
+	//PLATFORM_WINDOW
 };
 
 RELibrary* relib;
 
+DBool re_init();
 REWindow* re_create_window(DVector2D size, DString name, DBool fullscreen, REWindow* share);
