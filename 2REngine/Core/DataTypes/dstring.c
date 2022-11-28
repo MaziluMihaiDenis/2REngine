@@ -60,9 +60,7 @@ DString decimal_to_string(float value)
 
 	intValue = (int)value;
 	if (intValue == value)
-	{
 		return int_to_string(value);
-	}
 
 	{
 		float copy = value;
