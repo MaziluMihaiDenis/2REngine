@@ -2,6 +2,7 @@
 #include "../DataTypes/dstring.h"
 #include "../DataTypes/dvector2D.h"
 #include "../core.h"
+#include <stdio.h>
 
 #define DEBUG_LOG(x) _Generic((x), \
 	float: _debug_log_float, double: _debug_log_float, \
@@ -11,6 +12,18 @@
 	DString: _debug_log_string, \
 	default: _debug_log_text \
 )(x)
+
+#define RESET_PRINT_COLOR() printf("\033[0m")
+
+#define LOG_ERROR(x) \
+printf("\033[0;31m"), \
+DEBUG_LOG(x),		   \
+RESET_PRINT_COLOR()
+
+#define LOG_WARNING(x) \
+printf("\033[0;33m"), 	\
+DEBUG_LOG(x),			 \
+RESET_PRINT_COLOR()
 
 void _debug_log_float(float f);
 
