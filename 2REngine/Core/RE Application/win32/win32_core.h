@@ -3,7 +3,7 @@
 typedef struct win32Library win32Library;
 typedef struct win32Window win32Window;
 
-#define WIN32_LIBRARY win32Library* win32;
+#define WIN32_LIBRARY win32Library win32;
 #define WIN32_WINDOW win32Window* win32;
 
 #include "../../core.h"

@@ -7,8 +7,14 @@ REWindow* re_create_window(DVector2D size, DString name, DBool fullscreen, REWin
 	if (!MALLOC(window, 4))
 		return NULL;
 
+	if (!MALLOC(window->settings, 4))
+	{
+		free(window);
+		return NULL;
+	}
+
 	window->settings->name = name;
-	window->settings->pos = (DVector2D){ .x = 100, .y = 100 };
+	window->settings->pos = MAKE_VEC(100, 100);
 	window->settings->size = size;
 	window->settings->style = 0;
 	window->share = share;
@@ -27,7 +33,7 @@ REWindow* re_create_window(DVector2D size, DString name, DBool fullscreen, REWin
 
 void re_poll_events()
 {
-
+	relib.platform.platform_poll_events();
 }
 
 void re_free_window(REWindow* window)

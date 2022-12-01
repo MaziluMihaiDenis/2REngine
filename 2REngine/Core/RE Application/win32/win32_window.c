@@ -5,25 +5,24 @@
 
 LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	REWindow* window;
-	if (window = GetProp(hwnd, L"RE2.0"))
+	//REWindow* window = GetPropW(hwnd, L"RE");
+
+	switch (msg)
 	{
-		switch (msg)
-		{
-		case WM_CREATE:
-			break;
-		case WM_CLOSE:
-		case WM_DESTROY:
-			window->running = FALSE;
-			break;
-		case WM_QUIT:
-			PostQuitMessage(0);
-			return;
-		default:
-			break;
-		}
-		return DefWindowProc(hwnd, msg, wParam, lParam);
+	case WM_CLOSE:
+	case WM_DESTROY:
+		//window->running = FALSE;
+		break;
+	case WM_CREATE:
+		break;
+	case WM_QUIT:
+		PostQuitMessage(0);
+		return;
+	default:
+		break;
 	}
+
+	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
 DBool win32_create_window(REWindow* window, REWindowSettings* windowSettings)
@@ -34,20 +33,17 @@ DBool win32_create_window(REWindow* window, REWindowSettings* windowSettings)
 	WNDCLASS wndClass = { 0 };
 
 	if (!MALLOC(win32_window, 4))
-	{
-		LOG_ERROR("NO MEMORY");
 		return FALSE;
-	}
 
-	wndClass.hInstance = relib.win32->instance;
-	wndClass.lpszClassName = CLASS_NAME;
 	wndClass.lpfnWndProc = _win32_win_procedure;
+	wndClass.hInstance = relib.win32.instance;
+	wndClass.lpszClassName = CLASS_NAME;
 
 	RegisterClass(&wndClass);
 
 	wideTitle = char_to_wide(windowSettings->name);
 
-	win32_window->windowHandle = CreateWindowEx(
+	win32_window->windowHandle = CreateWindowExW(
 		windowSettings->style,
 		CLASS_NAME,
 		wideTitle,
@@ -56,24 +52,36 @@ DBool win32_create_window(REWindow* window, REWindowSettings* windowSettings)
 		windowSettings->pos.x, windowSettings->pos.y,
 		(window->share ? window->share->win32->windowHandle : NULL),
 		NULL,
-		relib.win32->instance,
+		relib.win32.instance,
 		NULL
 	);
 
-	free(wideTitle);
-
 	if (win32_window->windowHandle == NULL)
-	{
-		LOG_ERROR("WINDOW HANDLE NULL");
-		free(win32_window);
 		return FALSE;
-	}
 
 	ShowWindow(win32_window->windowHandle, SW_SHOW);
 
-	SetProp(win32_window->windowHandle, L"RE2.0", window);
+	SetPropW(win32_window->windowHandle, L"RE", window);
 
 	window->win32 = win32_window;
 
 	return TRUE;
+}
+
+void win32_poll_events()
+{
+	if (!relib.mainWindow)
+		return;
+
+	MSG msg = { 0 };
+
+	while (PeekMessageW(&msg, 0, 0, 0, PM_REMOVE) > 0)
+	{
+		TranslateMessage(&msg);
+		DispatchMessageW(&msg);
+	}
+}
+
+void win32_free_window(REWindow* window)
+{
 }

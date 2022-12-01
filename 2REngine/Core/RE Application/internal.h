@@ -17,14 +17,6 @@ struct REWindowSettings
 	int style;
 };
 
-struct RELibrary
-{
-	REPlatform platform;
-	REWindow* mainWindow;
-
-	PLATFORM_LIBRARY
-};
-
 struct REPlatform
 {
 	DBool(*platform_init)();
@@ -33,6 +25,15 @@ struct REPlatform
 	void(*platform_poll_events)();
 	void(*platform_free_window)(REWindow*);
 };
+
+struct RELibrary
+{
+	REPlatform platform;
+	REWindow* mainWindow;
+
+	PLATFORM_LIBRARY
+};
+
 
 struct REWindow
 {
