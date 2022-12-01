@@ -21,5 +21,5 @@ struct win32Window
 };
 
 DBool win32_init();
-win32Window* win32_create_window(struct REWindow* window, struct REWindowSettings* windowSettings);
+DBool win32_create_window(struct REWindow* window, struct REWindowSettings* windowSettings);
 void win32_free_window(struct REWindow* window);

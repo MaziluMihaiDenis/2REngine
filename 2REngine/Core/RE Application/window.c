@@ -5,7 +5,7 @@ REWindow* re_create_window(DVector2D size, DString name, DBool fullscreen, REWin
 	REWindow* window;
 
 	if (!MALLOC(window, 4))
-		return re_create_window(size, name, fullscreen, share);
+		return NULL;
 
 	window->settings->name = name;
 	window->settings->pos = (DVector2D){ .x = 100, .y = 100 };
@@ -15,10 +15,7 @@ REWindow* re_create_window(DVector2D size, DString name, DBool fullscreen, REWin
 	window->fullscreen = fullscreen;
 	window->running = TRUE;
 
-	if (relib.platform.platform_create_window(window, window->settings))
-	{
-			
-	}
+	relib.platform.platform_create_window(window, window->settings);
 
 	relib.mainWindow = window;
 

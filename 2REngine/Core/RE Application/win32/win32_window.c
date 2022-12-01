@@ -28,11 +28,11 @@ LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 
 DBool win32_init()
 {
-	relib->win32->instance = GetModuleHandle(0);
+	relib.win32->instance = GetModuleHandle(0);
 	return TRUE;
 }
 
-win32Window* win32_create_window(REWindow* window, REWindowSettings* windowSettings)
+DBool win32_create_window(REWindow* window, REWindowSettings* windowSettings)
 {
 	const wchar_t* CLASS_NAME = L"RE2.0";
 	const wchar_t* wideTitle;
@@ -40,9 +40,9 @@ win32Window* win32_create_window(REWindow* window, REWindowSettings* windowSetti
 	WNDCLASS wndClass = { 0 };
 
 	if (!MALLOC(win32_window, 4))
-		return win32_create_window(window, windowSettings);
+		return FALSE;
 
-	wndClass.hInstance = relib->win32->instance;
+	wndClass.hInstance = relib.win32->instance;
 	wndClass.lpszClassName = CLASS_NAME;
 	wndClass.lpfnWndProc = _win32_win_procedure;
 
@@ -59,7 +59,7 @@ win32Window* win32_create_window(REWindow* window, REWindowSettings* windowSetti
 		windowSettings->pos.x, windowSettings->pos.y,
 		(window->share ? window->share->win32->windowHandle : NULL),
 		NULL,
-		relib->win32->instance,
+		relib.win32->instance,
 		NULL
 	);
 
@@ -68,12 +68,14 @@ win32Window* win32_create_window(REWindow* window, REWindowSettings* windowSetti
 	if (win32_window->windowHandle == NULL)
 	{
 		free(win32_window);
-		return win32_create_window(window, windowSettings);
+		return FALSE;
 	}
 
 	ShowWindow(win32_window->windowHandle, SW_SHOW);
 
 	SetProp(win32_window->windowHandle, L"RE2.0", window);
 
-	return win32_window;
+	window->win32 = win32_window;
+
+	return TRUE;
 }

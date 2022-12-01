@@ -2,8 +2,9 @@
 
 DBool re_init()
 {
-	if (relib.platform.platform_init())
+	if (!relib.platform.platform_init())
 	{
+		return FALSE;
 	}
 	return TRUE;
 }
