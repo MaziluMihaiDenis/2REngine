@@ -28,7 +28,8 @@ struct RELibrary
 struct REPlatform
 {
 	DBool(*platform_init)();
-	REWindow(*platform_create_window)(REWindow*, REWindowSettings*);
+	void(*platform_terminate)();
+	DBool(*platform_create_window)(REWindow*, REWindowSettings*);
 	void(*platform_poll_events)();
 	void(*platform_free_window)(REWindow*);
 };
@@ -46,6 +47,8 @@ struct REWindow
 RELibrary relib;
 
 DBool re_init();
+void re_terminate();
+
 REWindow* re_create_window(DVector2D size, DString name, DBool fullscreen, REWindow* share);
 void re_poll_events();
 void re_free_window(REWindow* window);
