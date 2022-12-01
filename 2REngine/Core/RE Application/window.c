@@ -15,7 +15,10 @@ REWindow* re_create_window(DVector2D size, DString name, DBool fullscreen, REWin
 	window->fullscreen = fullscreen;
 	window->running = TRUE;
 
-	relib.platform.platform_create_window(window, window->settings);
+	if (!relib.platform.platform_create_window(window, window->settings))
+	{
+		return NULL;
+	}
 
 	relib.mainWindow = window;
 
