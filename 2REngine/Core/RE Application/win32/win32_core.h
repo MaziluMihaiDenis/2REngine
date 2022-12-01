@@ -20,6 +20,10 @@ struct win32Window
 	HWND windowHandle;
 };
 
+void win32_connect();
+void win32_terminate();
 DBool win32_init();
+
+void win32_poll_events();
 DBool win32_create_window(struct REWindow* window, struct REWindowSettings* windowSettings);
 void win32_free_window(struct REWindow* window);
