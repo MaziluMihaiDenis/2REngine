@@ -26,12 +26,6 @@ LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT msg, WPARAM wParam, LPARAM
 	}
 }
 
-DBool win32_init()
-{
-	relib.win32->instance = GetModuleHandle(0);
-	return TRUE;
-}
-
 DBool win32_create_window(REWindow* window, REWindowSettings* windowSettings)
 {
 	const wchar_t* CLASS_NAME = L"RE2.0";
@@ -40,7 +34,10 @@ DBool win32_create_window(REWindow* window, REWindowSettings* windowSettings)
 	WNDCLASS wndClass = { 0 };
 
 	if (!MALLOC(win32_window, 4))
+	{
+		LOG_ERROR("NO MEMORY");
 		return FALSE;
+	}
 
 	wndClass.hInstance = relib.win32->instance;
 	wndClass.lpszClassName = CLASS_NAME;
@@ -67,6 +64,7 @@ DBool win32_create_window(REWindow* window, REWindowSettings* windowSettings)
 
 	if (win32_window->windowHandle == NULL)
 	{
+		LOG_ERROR("WINDOW HANDLE NULL");
 		free(win32_window);
 		return FALSE;
 	}
