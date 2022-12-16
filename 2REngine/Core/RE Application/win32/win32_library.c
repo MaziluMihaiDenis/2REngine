@@ -18,6 +18,7 @@ void win32_connect()
 		win32_terminate,
 		win32_create_window,
 		win32_poll_events,
-		win32_free_window
+		win32_free_window,
+		win32_make_context_current
 	};
 }

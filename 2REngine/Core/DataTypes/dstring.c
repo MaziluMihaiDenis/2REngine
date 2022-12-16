@@ -7,15 +7,12 @@ DString bool_to_string(DBool value)
 {
 	DString* str;
 	if (!MALLOC(str, sizeof(DString*)))
-	{
-		free(str);
 		return bool_to_string(value);
-	}
 
 	if (value) 
-		*str = MAKE_STR("true");
+		*str = STRING("true");
 	else 
-		*str = MAKE_STR("false");
+		*str = STRING("false");
 
 	return *str;
 }
@@ -26,15 +23,12 @@ DString int_to_string(long long value)
 	int i;
 
 	if (!MALLOC(str, sizeof(DString*)))
-	{
-		free(str);
 		return int_to_string(value);
-	}
 
 	str->size = get_number_size(value);
 	if (!MALLOC(str->text, str->size + 1))
 	{
-		string_free(str);
+		FREE(str);
 		return int_to_string(value);
 	}
 
@@ -80,16 +74,12 @@ DString decimal_to_string(float value)
 	}
 
 	if (!MALLOC(str, sizeof(DString*)))
-	{
-		free(str);
 		return decimal_to_string(value);
-	}
 
 	
 	if (!MALLOC(str1, sizeof(DString*)))
 	{
-		free(str);
-		free(str1);
+		FREE(str);
 		return decimal_to_string(value);
 	}
 
@@ -106,13 +96,11 @@ DString vector2D_to_string(DVector2D vector)
 	DString* str_x, * str_y;
 	if (!MALLOC(str_x, sizeof(DString*)))
 	{
-		string_free(str_x);
 		return vector2D_to_string(vector);
 	}
 	if (!MALLOC(str_y, sizeof(DString*)))
 	{
 		string_free(str_x);
-		string_free(str_y);
 		return vector2D_to_string(vector);
 	}
 
@@ -134,7 +122,7 @@ int string_length(const char* string)
 DString string_append(const char* to_append, const char* string)
 {
 	if (to_append == NULL || string == NULL)
-		return MAKE_STR("NULL");
+		return STRING("NULL");
 
 	int i, size;
 	DString* str;
@@ -147,6 +135,7 @@ DString string_append(const char* to_append, const char* string)
 
 	size = 0;
 	for (i = 0; to_append[i] != '\0'; i++);
+
 	size += i;
 	for (i = 0; string[i] != '\0'; i++);
 	
@@ -169,17 +158,15 @@ DString string_append(const char* to_append, const char* string)
 
 void string_free(DString* str)
 {
-	free(str);
+	FREE(str->text);
+	FREE(str);
 }
 
 const widech* char_to_wide(DString string)
 {
 	widech* wideCs;
 	if (!MALLOC(wideCs, string.size))
-	{
-		free(wideCs);
 		return char_to_wide(string);
-	}
 	for (int i = 0; i < string.size; i++)
 		wideCs[i] = string.text[i];
 	return wideCs;

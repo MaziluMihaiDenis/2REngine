@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-#define MAKE_VEC(X, Y) (DVector2D){(X), (Y)}
+#define VECTOR2D(X, Y) (DVector2D){(X), (Y)}
 
 #define VFSUM(V1, F1) _vector_add_float(V1, F1)
 #define VFDIF(V1, F1) _vector_subtract_float(V1, F1)

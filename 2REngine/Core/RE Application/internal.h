@@ -8,6 +8,8 @@ typedef struct REWindowSettings REWindowSettings;
 typedef struct RELibrary RELibrary;
 typedef struct REPlatform REPlatform;
 typedef struct REWindow REWindow;
+typedef struct REContextSettings REContextSettings;
+typedef struct REContext REContext;
 
 struct REWindowSettings
 {
@@ -17,6 +19,11 @@ struct REWindowSettings
 	int style;
 };
 
+struct REContextSettings
+{
+	int minor, major, profile;
+};
+
 struct REPlatform
 {
 	DBool(*platform_init)();
@@ -24,6 +31,7 @@ struct REPlatform
 	DBool(*platform_create_window)(REWindow*, REWindowSettings*);
 	void(*platform_poll_events)();
 	void(*platform_free_window)(REWindow*);
+	DBool(*platform_make_current)(REWindow*);
 };
 
 struct RELibrary
@@ -34,9 +42,16 @@ struct RELibrary
 	PLATFORM_LIBRARY
 };
 
+struct REContext
+{
+	REContextSettings* settings;
+
+	PLATFORM_CONTEXT
+};
 
 struct REWindow
 {
+	REContext* context;
 	REWindow* share;
 	REWindowSettings* settings;
 	DBool fullscreen;
@@ -53,3 +68,5 @@ void re_terminate();
 REWindow* re_create_window(DVector2D size, DString name, DBool fullscreen, REWindow* share);
 void re_poll_events();
 void re_free_window(REWindow* window);
+
+void re_make_current(REWindow* window);

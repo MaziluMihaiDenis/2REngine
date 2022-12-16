@@ -8,7 +8,7 @@ typedef wchar_t widech;
 typedef char widech;
 #endif 
 
-#define MAKE_STR(T) (DString){T, string_length(T) + 1}
+#define STRING(T) (DString){T, string_length(T) + 1}
 
 typedef struct DString DString;
 

@@ -11,3 +11,8 @@ DBool re_init()
 
 	return TRUE;
 }
+
+void re_terminate()
+{
+
+}
