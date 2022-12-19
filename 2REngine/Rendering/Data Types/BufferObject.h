@@ -1,10 +1,12 @@
 #pragma once
-#include <glad/glad.h>
 
-struct BufferObject
+typedef struct DBufferObject DBufferObject;
+
+struct DBufferObject
 {
-	int VertexArray, VertexBuffer, IndexBuffer;
-	int IndicesSize;
+	unsigned int VertexArray, VertexBuffer, IndexBuffer;
+	unsigned int IndicesSize;
 };
 
-BufferObject _make_buffer_object(float* vertices);
+DBufferObject _make_buffer_object(float* vertices, unsigned int vsize, unsigned int* indices, int isize);
+void _bind_buffer_object(DBufferObject obj);
