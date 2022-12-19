@@ -1,7 +1,7 @@
 #include "win32_core.h"
 #include "../internal.h"
-#include "../../DataTypes/dstring.h"
-#include "../../DataTypes/dvector2d.h"
+#include "../../Data Types/dstring.h"
+#include "../../Data Types/dvector2d.h"
 
 LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {

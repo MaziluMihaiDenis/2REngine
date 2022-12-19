@@ -8,7 +8,7 @@ typedef wchar_t widech;
 typedef char widech;
 #endif 
 
-#define STRING(T) (DString){T, string_length(T) + 1}
+#define MAKE_STR(T) _make_string(T)
 
 typedef struct DString DString;
 
@@ -30,8 +30,7 @@ DString decimal_to_string(float value);
 // makes a string from text
 DString vector2D_to_string(struct DVector2D vector);
 
-// makes a string from text
-DString make_string(const char* text);
+DString _make_string(const char* str);
 
 // appends a string 
 DString string_append(const char* to_append, const char* string);

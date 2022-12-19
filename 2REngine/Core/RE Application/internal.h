@@ -1,6 +1,6 @@
 #pragma once
-#include "../DataTypes/dstring.h"
-#include "../DataTypes/dvector2D.h"
+#include "../Data Types/dstring.h"
+#include "../Data Types/dvector2D.h"
 #include "../Logging/logging.h"
 #include "platform.h"
 

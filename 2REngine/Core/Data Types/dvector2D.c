@@ -64,6 +64,12 @@ DVector2D _vector_multiply_float(DVector2D v1, float f)
 	return vec;
 }
 
+DVector2D _make_vector(float x, float y)
+{
+	DVector2D vec = { x, y };
+	return vec;
+}
+
 DVector2D _vector_divide_float(DVector2D v1, float f)
 {
 	DVector2D vec = { v1.x / f, v1.y / f };

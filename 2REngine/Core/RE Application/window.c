@@ -14,7 +14,7 @@ REWindow* re_create_window(DVector2D size, DString name, DBool fullscreen, REWin
 	}
 
 	window->settings->name = name;
-	window->settings->pos = VECTOR2D(100, 100);
+	window->settings->pos = MAKE_VEC(100, 100);
 	window->settings->size = size;
 	window->settings->style = 0;
 	window->share = share;

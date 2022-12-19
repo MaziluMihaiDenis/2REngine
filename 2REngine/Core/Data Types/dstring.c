@@ -10,9 +10,9 @@ DString bool_to_string(DBool value)
 		return bool_to_string(value);
 
 	if (value) 
-		*str = STRING("true");
+		*str = MAKE_STR("true");
 	else 
-		*str = STRING("false");
+		*str = MAKE_STR("false");
 
 	return *str;
 }
@@ -114,6 +114,12 @@ DString vector2D_to_string(DVector2D vector)
 	return *str_x;
 }
 
+DString _make_string(const char* str)
+{
+	DString dstr = { str, string_length(str) + 1 };
+	return dstr;
+}
+
 int string_length(const char* string)
 {
 	int cnt; for (cnt = 0; string[cnt] != '\0'; cnt++); return cnt;
@@ -122,7 +128,7 @@ int string_length(const char* string)
 DString string_append(const char* to_append, const char* string)
 {
 	if (to_append == NULL || string == NULL)
-		return STRING("NULL");
+		return MAKE_STR("NULL");
 
 	int i, size;
 	DString* str;
