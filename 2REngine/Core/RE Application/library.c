@@ -3,7 +3,7 @@
 DBool re_init()
 {
 #if defined(_WIN32)
-	win32_connect();
+	_win32_connect();
 #endif
 
 	if (!relib.platform.platform_init())

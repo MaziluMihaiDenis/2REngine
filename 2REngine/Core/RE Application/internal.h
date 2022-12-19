@@ -32,6 +32,7 @@ struct REPlatform
 	void(*platform_poll_events)();
 	void(*platform_free_window)(REWindow*);
 	DBool(*platform_make_current)(REWindow*);
+	void(*platform_swap_buffers)(REWindow*);
 };
 
 struct RELibrary
@@ -70,3 +71,4 @@ void re_poll_events();
 void re_free_window(REWindow* window);
 
 void re_make_current(REWindow* window);
+void re_swap_buffers(REWindow* window);

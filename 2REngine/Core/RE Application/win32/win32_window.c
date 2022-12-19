@@ -35,12 +35,12 @@ LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
 
 DBool win32_create_window(REWindow* window, REWindowSettings* windowSettings)
 {
-	if (!win32_create_window_instance(window, windowSettings))
+	if (!_win32_create_window_instance(window, windowSettings))
 	{
 		LOG_ERROR("COULDN'T INSTANCE A WINDOW");
 		return FALSE;
 	}
-	if (!win32_create_context(window, NULL))
+	if (!_win32_create_context(window, NULL))
 	{
 		FREE(window->win32);
 		LOG_ERROR("COULDN'T CREATE A CONTEXT");
@@ -49,7 +49,7 @@ DBool win32_create_window(REWindow* window, REWindowSettings* windowSettings)
 	return TRUE;
 }
 
-DBool win32_create_window_instance(REWindow* window, REWindowSettings* windowSettings)
+DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSettings)
 {
 	const wchar_t* CLASS_NAME = L"RE2.0";
 	wchar_t* wideTitle;
@@ -95,7 +95,7 @@ DBool win32_create_window_instance(REWindow* window, REWindowSettings* windowSet
 	return TRUE;
 }
 
-void win32_poll_events()
+void _win32_poll_events()
 {
 	if (!relib.mainWindow)
 		return;
@@ -109,7 +109,7 @@ void win32_poll_events()
 	}
 }
 
-void win32_free_window(REWindow* window)
+void _win32_free_window(REWindow* window)
 {
 	FREE(window->win32);
 }

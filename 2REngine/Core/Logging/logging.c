@@ -28,5 +28,5 @@ void _debug_log_string(DString str)
 
 void _debug_log_text(const char* text)
 {
-	printf("%s", text);
+	printf("%s\n", text);
 }
