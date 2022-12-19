@@ -1,0 +1,4 @@
+/*
+	Aici va fi toata frustrarea din codul acesta minunat
+
+*/
