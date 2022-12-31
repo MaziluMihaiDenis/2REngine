@@ -62,10 +62,10 @@ DBool _win32_create_context(REWindow* window, REContextSettings* settings)
 	REContext* context;
 	win32Context* win32_context;
 
-	if (!MALLOC(win32_context, 4))
+	if (!MALLOC(win32_context, sizeof(win32Context)))
 		return FALSE;
 
-	if (!MALLOC(context, 4))
+	if (!MALLOC(context, sizeof(REContext)))
 	{
 		FREE(win32_context);
 		return FALSE;

@@ -8,5 +8,9 @@ struct DBufferObject
 	unsigned int IndicesSize;
 };
 
-DBufferObject _make_buffer_object(float* vertices, unsigned int vsize, unsigned int* indices, int isize);
-void _bind_buffer_object(DBufferObject obj);
+DBufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned int* indices, unsigned int isize);
+
+// Set to 0 for unbind
+void _bind_buffer_object(DBufferObject* obj);
+
+void _free_buffer_object(DBufferObject* obj);

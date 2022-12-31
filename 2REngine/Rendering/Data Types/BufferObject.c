@@ -2,10 +2,10 @@
 #include "../../Core/2relibrary.h"
 #include <glad/glad.h>
 
-DBufferObject _make_buffer_object(float* vertices, unsigned int vsize, unsigned int* indices, int isize)
+DBufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned int* indices, unsigned int isize)
 {
 	DBufferObject* obj;
-	if (!MALLOC(obj, 4))
+	if (!MALLOC(obj, sizeof(DBufferObject)))
 		return;
 
 	glGenVertexArrays(1, &obj->VertexArray);
@@ -27,10 +27,15 @@ DBufferObject _make_buffer_object(float* vertices, unsigned int vsize, unsigned 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	return *obj;
+	return obj;
 }
 
-void _bind_buffer_object(DBufferObject obj)
+void _bind_buffer_object(DBufferObject* obj)
 {
-	glBindVertexArray(obj.VertexArray);
+	glBindVertexArray(obj->VertexArray);
+}
+
+void _free_buffer_object(DBufferObject* obj)
+{
+	FREE(obj);
 }

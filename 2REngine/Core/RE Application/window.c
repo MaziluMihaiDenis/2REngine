@@ -4,12 +4,12 @@ REWindow* re_create_window(DVector2D size, DString name, DBool fullscreen, REWin
 {
 	REWindow* window;
 
-	if (!MALLOC(window, 4))
+	if (!MALLOC(window, sizeof(REWindow)))
 		return NULL;
 
-	if (!MALLOC(window->settings, 4))
+	if (!MALLOC(window->settings, sizeof(REWindowSettings)))
 	{
-		free(window);
+		FREE(window);
 		return NULL;
 	}
 

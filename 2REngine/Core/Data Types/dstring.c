@@ -135,7 +135,7 @@ DString string_append(const char* to_append, const char* string)
 
 	if (!MALLOC(str, sizeof(DString*)))
 	{
-		free(str);
+		FREE(str);
 		return string_append(to_append, string);
 	}
 
@@ -175,5 +175,6 @@ const widech* char_to_wide(DString string)
 		return char_to_wide(string);
 	for (int i = 0; i < string.size; i++)
 		wideCs[i] = string.text[i];
+	wideCs[string.size] = '\0';
 	return wideCs;
 }

@@ -5,18 +5,7 @@
 
 LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	REWindow* window = GetPropW(hwnd, L"RE");
-	
-	switch (uMsg)
-	{
-	case WM_CREATE:
-		break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		return;
-	default:
-		break;
-	}
+	REWindow* window = (REWindow*)GetPropW(hwnd, L"RE");
 	
 	if (window)
 	{
@@ -26,10 +15,18 @@ LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
 		case WM_DESTROY:
 			window->running = FALSE;
 			break;
-		default:
-			break;
 		}
 	}
+	else
+	{
+		switch (uMsg)
+		{
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			return 0;
+		}
+	}
+
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
@@ -56,7 +53,7 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 	win32Window* win32_window;
 	WNDCLASS wndClass = { 0 };
 
-	if (!MALLOC(win32_window, sizeof(win32Window*)))
+	if (!MALLOC(win32_window, sizeof(win32Window)))
 		return FALSE;
 
 	wndClass.lpfnWndProc = _win32_win_procedure;
@@ -74,7 +71,7 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 		WS_OVERLAPPEDWINDOW,
 		windowSettings->pos.x, windowSettings->pos.y,
 		windowSettings->size.x, windowSettings->size.y,
-		(window->share ? window->share->win32->windowHandle : NULL),
+		NULL,
 		NULL,
 		relib.win32.instance,
 		NULL
