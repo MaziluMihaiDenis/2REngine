@@ -7,7 +7,7 @@ typedef unsigned short DBool;
 
 #define IS_TYPE_OF(x, type) _Generic((x), type : 1, default : 0)
 
-#define MEMORY_ALLOCATION_DEBUG_MODE_ENABLED 1
+#define MEMORY_ALLOCATION_DEBUG_MODE_ENABLED 0
 
 #define MALLOC(ptr, size) ((ptr = mem_alloc(size, #ptr)) != NULL)	
 #define FREE(ptr) mem_free(ptr, #ptr)

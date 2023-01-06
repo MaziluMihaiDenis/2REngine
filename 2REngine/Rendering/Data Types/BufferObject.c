@@ -8,16 +8,19 @@ DBufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned
 	if (!MALLOC(obj, sizeof(DBufferObject)))
 		return;
 
-	glGenVertexArrays(1, &obj->VertexArray);
-	glGenBuffers(1, &obj->IndexBuffer);
-	glGenBuffers(1, &obj->VertexBuffer);
+	obj->indices = indices;
+	obj->indicesSize = isize;
 
-	glBindVertexArray(obj->VertexArray);
+	glGenVertexArrays(1, &obj->vertexArray);
+	glGenBuffers(1, &obj->indexBuffer);
+	glGenBuffers(1, &obj->vertexBuffer);
 
-	glBindBuffer(GL_ARRAY_BUFFER, obj->VertexBuffer);
+	glBindVertexArray(obj->vertexArray);
+
+	glBindBuffer(GL_ARRAY_BUFFER, obj->vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, vsize, vertices, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->IndexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, isize, indices, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)0);
@@ -32,7 +35,8 @@ DBufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned
 
 void _bind_buffer_object(DBufferObject* obj)
 {
-	glBindVertexArray(obj->VertexArray);
+	glBindVertexArray(obj->vertexArray);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->indexBuffer);
 }
 
 void _free_buffer_object(DBufferObject* obj)

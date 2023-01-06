@@ -4,8 +4,9 @@ typedef struct DBufferObject DBufferObject;
 
 struct DBufferObject
 {
-	unsigned int VertexArray, VertexBuffer, IndexBuffer;
-	unsigned int IndicesSize;
+	unsigned int vertexArray, vertexBuffer, indexBuffer;
+	unsigned int indicesSize;
+	unsigned int* indices;
 };
 
 DBufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned int* indices, unsigned int isize);

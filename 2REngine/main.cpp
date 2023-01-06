@@ -1,6 +1,7 @@
+#include "Core/2relibrary.h"
+#include <stb_image.h>
 extern "C"
 {
-#include "Core/2relibrary.h"
 #include "Rendering/Data Types/BufferObject.h"
 }
 #include <glad/glad.h>
@@ -17,22 +18,20 @@ int main()
     re_make_current(window);
     gladLoadGL();
     glViewport(0, 0, 1024, 768);
-
+    
     float verts[6] = {
         -1.f, -1.f,
         1.f, -1.f,
         1.f, 1.f
     };
-    unsigned int indices[] = { 0, 1, 2 };
+    unsigned int indices[3] = { 0, 1, 2 };
 
-    DBufferObject* bo = _make_buffer_object(verts, 6, indices, 3);
+    DBufferObject* bo = _make_buffer_object(verts, sizeof(verts), indices, sizeof(indices));
 
     while (window->running)
     {
         re_poll_events();
 
-        _bind_buffer_object(bo);
-        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, 0);
 
         re_swap_buffers(window);
     }
