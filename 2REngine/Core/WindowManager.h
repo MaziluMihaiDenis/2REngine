@@ -1,6 +1,9 @@
 #pragma once
 
-#include ""
+extern "C"
+{
+#include "2relibrary.h"
+}
 
 class WindowManager
 {
