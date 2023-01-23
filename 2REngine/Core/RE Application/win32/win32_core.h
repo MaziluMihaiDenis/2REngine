@@ -38,7 +38,7 @@ DBool _win32_create_window_instance(struct REWindow* window, struct REWindowSett
 void _win32_free_window(struct REWindow* window);
 
 DBool _win32_create_context(struct REWindow* window, struct REContextSettings* settings);
-DBool win32_make_context_current(struct REWindow* window);
+DBool win32_set_context_current(struct REWindow* window);
 DBool _win32_init_gl();
 
 DBool _choose_pixel_format(struct REWindow* window, struct REContextSettings* settings);

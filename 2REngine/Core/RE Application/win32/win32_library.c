@@ -17,13 +17,13 @@ void _win32_terminate()
 
 void _win32_connect()
 {
-	relib.platform = (REPlatform){
+	*relib.platform = (REPlatform){
 		_win32_init,
 		_win32_terminate,
 		win32_create_window,
 		_win32_poll_events,
 		_win32_free_window,
-		win32_make_context_current,
+		win32_set_context_current,
 		_win32_swap_buffers
 	};
 }

@@ -94,7 +94,7 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 
 void _win32_poll_events()
 {
-	if (!relib.mainWindow)
+	if (!relib.windows[0])
 		return;
 
 	MSG msg = { 0 };

@@ -4,6 +4,10 @@
 #include "../core.h"
 #include <stdio.h>
 
+///
+/// REWORK NEEDED
+/// 
+
 #define DEBUG_LOG(x) _Generic((x), \
 	float: _debug_log_float, double: _debug_log_float, \
 	int: _debug_log_int, \
@@ -15,15 +19,19 @@
 
 #define RESET_PRINT_COLOR() printf("\033[0m")
 
+#if !defined(__cplusplus)
 #define LOG_ERROR(x) \
 printf("\033[0;31m"), \
 DEBUG_LOG(x),		   \
 RESET_PRINT_COLOR()
+#endif
 
+#if !defined(__cplusplus)
 #define LOG_WARNING(x) \
 printf("\033[0;33m"), 	\
 DEBUG_LOG(x),			 \
 RESET_PRINT_COLOR()
+#endif
 
 void _debug_log_float(float f);
 

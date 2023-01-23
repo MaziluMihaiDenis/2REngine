@@ -1,4 +1,5 @@
 #pragma once
+
 class Engine
 {
 	friend int main();

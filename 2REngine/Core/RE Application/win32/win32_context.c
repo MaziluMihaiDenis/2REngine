@@ -93,7 +93,7 @@ DBool _win32_create_context(REWindow* window, REContextSettings* settings)
 	return TRUE;
 }
 
-DBool win32_make_context_current(REWindow* window)
+DBool win32_set_context_current(REWindow* window)
 {
 	if (window)
 	{

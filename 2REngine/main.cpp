@@ -1,43 +1,38 @@
+#include "Core/Engine/WindowManager.h"
 #include "Core/2relibrary.h"
-#include <stb_image.h>
-extern "C"
-{
-#include "Rendering/Data Types/BufferObject.h"
-}
 #include <glad/glad.h>
 #include <stdio.h>
 
 int main()
 {
-    REWindow* window;
+    re_init();
 
-    if (!re_init()) 
+    // Initialize Window
+    REWindow* mainWindow;
+    int winWidth, winHeight;
+
+    WindowManager::GetWindowManager()->InitWindow();
+    mainWindow = WindowManager::GetWindowManager()->GetWindow(0);
+    winWidth = mainWindow->settings->size.x;
+    winHeight = mainWindow->settings->size.y;
+
+    // Initialize GL
+    re_set_context_current(mainWindow);
+    if (!gladLoadGL()) {
+        if (DEBUG_MODE_ENABLED)
+            printf("glad init error");
         return 1;
+    }
+    glViewport(0, 0, winWidth, winHeight); // Error here
 
-    window = re_create_window(MAKE_VEC(1024, 768), MAKE_STR("NIGGER"), FALSE, 0);
-    re_make_current(window);
-    gladLoadGL();
-    glViewport(0, 0, 1024, 768);
-    
-    float verts[6] = {
-        -1.f, -1.f,
-        1.f, -1.f,
-        1.f, 1.f
-    };
-    unsigned int indices[3] = { 0, 1, 2 };
-
-    DBufferObject* bo = _make_buffer_object(verts, sizeof(verts), indices, sizeof(indices));
-
-    while (window->running)
+    while (mainWindow->running)
     {
         re_poll_events();
 
-
-        re_swap_buffers(window);
+        re_swap_buffers(mainWindow);
     }
 
-    _free_buffer_object(bo);
-    re_free_window(window);
+    re_terminate();
 
     return 0;
 }
