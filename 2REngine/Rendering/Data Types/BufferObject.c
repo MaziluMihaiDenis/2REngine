@@ -1,6 +1,6 @@
 #include "BufferObject.h"
-#include "../../Core/2relibrary.h"
-#include <glad/glad.h>
+#include "../../2relibrary.h"
+#include "../../External/Glad/glad.h"
 
 DBufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned int* indices, unsigned int isize)
 {

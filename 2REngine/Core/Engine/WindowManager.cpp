@@ -1,5 +1,5 @@
 #include "WindowManager.h"
-#include "../2relibrary.h"
+#include "../../2relibrary.h"
 #include "../File Worker/FileWorker.h"
 
 void WindowManager::InitWindow()

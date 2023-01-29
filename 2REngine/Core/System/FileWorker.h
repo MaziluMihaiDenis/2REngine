@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Data Types/dstring.h"
+#include "../Structs/dstring.h"
 #include <stdio.h>
 
 // .CFG FILES

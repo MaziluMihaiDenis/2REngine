@@ -1,7 +1,7 @@
 #pragma once
-#include "../Data Types/dstring.h"
-#include "../Data Types/dvector2D.h"
-#include "../Logging/logging.h"
+#include "../Structs/dstring.h"
+#include "../Structs/dvector2D.h"
+#include "../Debug/logging.h"
 #include "platform.h"
 
 typedef struct REWindowSettings REWindowSettings;

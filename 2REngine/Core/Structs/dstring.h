@@ -1,5 +1,5 @@
 #pragma once
-#include "../core.h"
+#include "core.h"
 
 #if defined(_WIN32)
 #include <Windows.h>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core.h"
+#include "../Structs/core.h"
 #include <vector>
 
 class WindowManager

@@ -1,7 +1,7 @@
 #include "dstring.h"
 #include "dvector2D.h"
-#include "../basic_num_func.h"
-#include "../core.h"
+#include "../Structs/basic_num_func.h"
+#include "../Structs/core.h"
 
 DString bool_to_string(DBool value)
 {

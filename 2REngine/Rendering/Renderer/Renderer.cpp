@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include <glad/glad.h>
+#include "../../External/Glad/glad.h"
 
 void Renderer::RenderLoop()
 {
