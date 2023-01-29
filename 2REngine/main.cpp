@@ -1,6 +1,6 @@
 #include "Core/Engine/WindowManager.h"
 #include "Core/2relibrary.h"
-#include <glad/glad.h>
+#include "External/Glad/glad.h"
 #include <stdio.h>
 
 int main()
