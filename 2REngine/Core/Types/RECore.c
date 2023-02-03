@@ -1,5 +1,5 @@
-#include "core.h"
-#include "../Debug/logging.h"
+#include "RECore.h"
+#include <stdio.h>
 #include <corecrt_malloc.h>
 
 void* mem_alloc(size_t size, const char* name)

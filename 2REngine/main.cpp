@@ -13,8 +13,8 @@ int main()
 
     WindowManager::GetWindowManager()->InitWindow();
     mainWindow = WindowManager::GetWindowManager()->GetWindow(0);
-    winWidth = mainWindow->settings->size.x;
-    winHeight = mainWindow->settings->size.y;
+    winWidth = mainWindow->settings->width;
+    winHeight = mainWindow->settings->height;
 
     // Initialize GL
     re_set_context_current(mainWindow);
@@ -23,7 +23,7 @@ int main()
             printf("glad init error");
         return 1;
     }
-    glViewport(0, 0, winWidth, winHeight); // Error here
+    glViewport(0, 0, winWidth, winHeight); 
 
     while (mainWindow->running)
     {

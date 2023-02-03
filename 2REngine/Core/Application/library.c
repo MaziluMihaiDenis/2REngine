@@ -19,7 +19,6 @@ REWindow* re_get_window(int index)
 {
 	if (index >= relib.windows_count)
 	{
-		//LOG_ERROR("Index outside array bounds");
 		return NULL;
 	}
 	return relib.windows[index];

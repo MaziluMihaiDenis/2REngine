@@ -1,4 +1,4 @@
-#include "basic_num_func.h"
+#include "REMath.h"
 
 int get_number_size(long long value)
 {

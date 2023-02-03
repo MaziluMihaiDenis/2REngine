@@ -1,6 +1,6 @@
 #include "WindowManager.h"
 #include "../../2relibrary.h"
-#include "../File Worker/FileWorker.h"
+#include "../System/FileWorker.h"
 
 void WindowManager::InitWindow()
 {
@@ -12,9 +12,9 @@ void WindowManager::InitWindow()
 
 	REWindowSettings settings
 	{
-		MAKE_STR("NIGGA BALLS"),
-		MAKE_VEC(600, 540),
-		MAKE_VEC(width, height),
+		"NIGGA BALLS",
+		600, 540,
+		width, height,
 		0
 	};
 

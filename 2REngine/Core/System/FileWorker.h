@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Structs/dstring.h"
+#include "../Types/StringFunctions.h"
 #include <stdio.h>
 
 // .CFG FILES
@@ -50,4 +50,4 @@ inline int get_property_value_as_string(const char* filename, const char* proper
 
 // writing
 DBool add_property_value_as_int(const char* filename, const char* property_name, int value);
-DBool add_property_value_as_string(const char* filename, const char* property_name, DString string);
+DBool add_property_value_as_string(const char* filename, const char* property_name, char *string);

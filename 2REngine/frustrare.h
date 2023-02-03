@@ -11,4 +11,6 @@
 // When I wrote this, only God and I understood what I was doing
 // Now, God only knows
 
-// My code is 50/50, sometime it works, sometimes it doesn't, LOVE C 
+// My code is 50/50, sometime it works, sometimes it doesn't
+
+// The compiler doesn't have enough error descriptions for my errors

@@ -1,7 +1,6 @@
 #pragma once
-#include "../Structs/dstring.h"
-#include "../Structs/dvector2D.h"
-#include "../Debug/logging.h"
+#include "../Types/StringFunctions.h"
+#include "../Types/Vector2D.h"
 #include "platform.h"
 
 typedef struct REWindowSettings REWindowSettings;
@@ -12,11 +11,13 @@ typedef struct REContextSettings REContextSettings;
 typedef struct REContext REContext;
 typedef struct RESystem RESystem;
 
+// TODO: Implement RESystem
+
 struct REWindowSettings
 {
-	DString name;
-	DVector2D pos;
-	DVector2D size;
+	char *name;
+	int offsetX, offsetY;
+	int width, height;
 	int style;
 };
 
