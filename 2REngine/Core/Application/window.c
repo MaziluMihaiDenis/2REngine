@@ -22,7 +22,7 @@ REWindow* re_create_window(REWindowSettings* settings, DBool fullscreen, REWindo
 	if (!relib.platform->platform_create_window(window, window->settings))
 		return NULL;
 
-	relib.windows = realloc(relib.windows, (relib.windows_count + 1) *sizeof(REWindow*));
+	relib.windows = realloc(relib.windows, (relib.windows_count + 1) * sizeof(REWindow*));
 	relib.windows[relib.windows_count++] = window;
 
 	return window;
