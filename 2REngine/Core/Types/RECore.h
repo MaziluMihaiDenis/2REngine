@@ -7,7 +7,7 @@
 #define MALLOC(ptr, size) ((ptr = mem_alloc(size, #ptr)) != NULL)	
 #define FREE(ptr) mem_free(ptr, #ptr)
 
-#define DEBUG_MODE_ENABLED 0
+#define DEBUG_MODE_ENABLED 1
 
 #define TRUE 1
 #define FALSE 0
