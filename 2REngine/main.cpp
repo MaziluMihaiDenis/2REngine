@@ -1,5 +1,6 @@
 #include "2relibrary.h"
 #include "Core/Engine/WindowManager.h"
+#include "Core/Engine/Engine.h"
 #include "External/Glad/glad.h"
 #include <stdio.h>
 
@@ -11,8 +12,9 @@ int main()
     REWindow* mainWindow;
     int winWidth, winHeight;
 
-    WindowManager::GetWindowManager()->InitWindow();
-    mainWindow = WindowManager::GetWindowManager()->GetWindow(0);
+    Engine::GetInstance()->Begin();
+
+    mainWindow = WindowManager::GetInstance()->GetWindow(0);
     winWidth = mainWindow->settings->width;
     winHeight = mainWindow->settings->height;
 
