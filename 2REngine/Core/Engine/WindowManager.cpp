@@ -1,18 +1,19 @@
 #include "WindowManager.h"
 #include "../../2relibrary.h"
-#include "../System/FileWorker.h"
+#include "../../Paths.h"
 
 void WindowManager::InitWindow()
 {
 	int width, height;
-	height = get_property_value_as_int("C:\\Users\\mazil\\AppData\\Roaming\\2REngine\\config.cfg",
-		"engine\\runtime\\window\\height");
-	width = get_property_value_as_int("C:\\Users\\mazil\\AppData\\Roaming\\2REngine\\config.cfg",
-		"engine\\runtime\\window\\width");
+	char* title;
+
+	width = sys_get_file_property_as_int(CONFIG_PATH, CONFIG_WINDOW_WIDTH);
+	height = sys_get_file_property_as_int(CONFIG_PATH, CONFIG_WINDOW_HEIGHT);
+	title = sys_get_file_property_as_string(CONFIG_PATH, CONFIG_WINDOW_TITLE);
 
 	REWindowSettings settings
 	{
-		"NIGGA BALLS",
+		title,
 		600, 540,
 		width, height,
 		0
@@ -39,9 +40,9 @@ REWindow* WindowManager::GetWindow(int index)
 	return re_get_window(index);
 }
 
-WindowManager* WindowManager::GetWindowManager()
+WindowManager* WindowManager::GetInstance()
 {
-	if (!WindowManagerInstance)
-		WindowManagerInstance = new WindowManager();
-	return WindowManagerInstance;
+	if (!Instance)
+		Instance = new WindowManager();
+	return Instance;
 }

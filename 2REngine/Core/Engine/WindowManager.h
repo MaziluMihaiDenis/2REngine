@@ -6,9 +6,10 @@
 class WindowManager
 {
 	friend int main();
+	friend class Engine;
 
 private:
-	static inline WindowManager* WindowManagerInstance;
+	static inline WindowManager* Instance;
 
 	void InitWindow();
 public:
@@ -16,5 +17,5 @@ public:
 	bool CloseWindow(struct REWindow* window);
 	struct REWindow* GetWindow(int index);
 public:
-	static WindowManager* GetWindowManager();
+	static WindowManager* GetInstance();
 };
