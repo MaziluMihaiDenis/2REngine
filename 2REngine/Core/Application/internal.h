@@ -1,6 +1,4 @@
 #pragma once
-#include "../Types/StringFunctions.h"
-#include "../Types/Vector2D.h"
 #include "platform.h"
 
 typedef struct REWindowSettings REWindowSettings;
