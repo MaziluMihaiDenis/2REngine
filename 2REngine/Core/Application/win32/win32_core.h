@@ -45,3 +45,5 @@ DBool _choose_pixel_format(struct REWindow* window, struct REContextSettings* se
 DBool _wgl_choose_pixel_format(struct REWindow* window, struct REContextSettings* settings);
 DBool _win32_choose_pixel_format(struct REWindow* window, struct REContextSettings* settings);
 void _win32_swap_buffers(struct REWindow* window);
+
+void _win_get_monitor_size(int* width, int* height);

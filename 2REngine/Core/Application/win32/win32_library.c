@@ -25,6 +25,7 @@ void _win32_connect()
 		_win32_poll_events,
 		_win32_free_window,
 		win32_set_context_current,
-		_win32_swap_buffers
+		_win32_swap_buffers,
+		_win_get_monitor_size
 	};
 }

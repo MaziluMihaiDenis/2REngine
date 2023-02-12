@@ -1,6 +1,6 @@
 #include "WindowManager.h"
 #include "../../2relibrary.h"
-#include "../../Paths.h"
+#include "../../Constants.h"
 
 void WindowManager::InitWindow()
 {
@@ -14,7 +14,7 @@ void WindowManager::InitWindow()
 	REWindowSettings settings
 	{
 		title,
-		600, 540,
+		0, 0,
 		width, height,
 		0
 	};

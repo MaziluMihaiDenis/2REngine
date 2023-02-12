@@ -38,6 +38,7 @@ struct REPlatform
 	void(*platform_free_window)(REWindow*);
 	DBool(*platform_set_context_current)(REWindow*);
 	void(*platform_swap_buffers)(REWindow*);
+	void(*platform_get_monitor_size)(int*, int*);
 };
 
 struct RELibrary
@@ -81,3 +82,5 @@ void re_free_window(REWindow* window);
 
 void re_set_context_current(REWindow* window);
 void re_swap_buffers(REWindow* window);
+
+void re_get_monitor_size(int *width, int *height);
