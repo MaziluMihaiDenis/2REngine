@@ -14,3 +14,5 @@
 // My code is 50/50, sometime it works, sometimes it doesn't
 
 // The compiler doesn't have enough error descriptions for my errors
+
+// Winning at gambling is easier than making this code work
