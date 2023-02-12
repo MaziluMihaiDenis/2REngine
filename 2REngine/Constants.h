@@ -4,3 +4,4 @@
 #define CONFIG_WINDOW_WIDTH "window\\width"
 #define CONFIG_WINDOW_HEIGHT "window\\height"
 #define CONFIG_WINDOW_TITLE "window\\title"
+#define APPLICATION_TITLE "MyLifeBeLike"
