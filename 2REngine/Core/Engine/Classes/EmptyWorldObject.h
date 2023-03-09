@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Object.h"
+#include "Component.h"
 
 class EmptyWorldObject : public Object
 {

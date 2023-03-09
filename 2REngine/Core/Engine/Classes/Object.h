@@ -2,8 +2,6 @@
 
 #include <vector>
 
-#include "Component.h"
-
 typedef const char* ClassName;
 
 class Object
