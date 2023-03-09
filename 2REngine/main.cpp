@@ -2,36 +2,44 @@
 #include "Core/Engine/WindowManager.h"
 #include "Core/Engine/Engine.h"
 #include "External/Glad/glad.h"
-#include <stdio.h>
+#include "Core/Types/Debug/debug.h"
 
 int main()
 {
-    re_init();
+    float delta, startTime; 
 
-    // Initialize Window
     REWindow* mainWindow;
     int winWidth, winHeight;
 
+    re_init();
     Engine::GetInstance()->Begin();
 
     mainWindow = WindowManager::GetInstance()->GetWindow(0);
     winWidth = mainWindow->settings->width;
     winHeight = mainWindow->settings->height;
 
-    // Initialize GL
     re_set_context_current(mainWindow);
-    if (!gladLoadGL()) {
+    if (!gladLoadGL()) 
+    {
         if (DEBUG_MODE_ENABLED)
-            printf("glad init error");
+            PRINT(ESEVERITY::DEFAULT, "%s", "GL couldn't load!");
         return 1;
     }
     glViewport(0, 0, winWidth, winHeight); 
 
+    delta = 0.0;
+
     while (mainWindow->running)
     {
+        startTime = re_get_time_ms();
+
         re_poll_events();
 
+        Engine::GetInstance()->Loop(delta);
+
         re_swap_buffers(mainWindow);
+
+        delta = 1.f * (re_get_time_ms() - startTime) / re_get_time_frequency();
     }
 
     re_terminate();

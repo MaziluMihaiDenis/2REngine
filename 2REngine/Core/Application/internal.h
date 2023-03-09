@@ -11,6 +11,8 @@ typedef struct RESystem RESystem;
 
 // TODO: Implement RESystem
 
+typedef void(*REKeyCallback)(int, int);
+
 struct REWindowSettings
 {
 	char *name;
@@ -39,6 +41,8 @@ struct REPlatform
 	DBool(*platform_set_context_current)(REWindow*);
 	void(*platform_swap_buffers)(REWindow*);
 	void(*platform_get_monitor_size)(int*, int*);
+	int(*platform_get_time_ms)();
+	int(*platform_get_time_frequency)();
 };
 
 struct RELibrary
@@ -48,6 +52,11 @@ struct RELibrary
 	REWindow** windows;
 
 	int windows_count;
+
+	struct
+	{
+		REKeyCallback key;
+	} callbacks;
 
 	PLATFORM_LIBRARY
 };
@@ -84,3 +93,7 @@ void re_set_context_current(REWindow* window);
 void re_swap_buffers(REWindow* window);
 
 void re_get_monitor_size(int *width, int *height);
+void re_set_key_callback(REKeyCallback callback);
+
+int re_get_time_ms();
+int re_get_time_frequency();

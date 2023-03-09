@@ -10,7 +10,7 @@ private:
 private:
 	void FirstStart();
 	void Begin();
-	void Loop();
+	void Loop(float deltaTime);
 	void End();
 public:
 	static Engine* GetInstance();

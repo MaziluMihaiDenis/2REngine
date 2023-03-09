@@ -38,3 +38,8 @@ void re_free_window(REWindow* window)
 	relib.platform->platform_free_window(window);
 }
 
+void re_set_key_callback(REKeyCallback callback)
+{
+	relib.callbacks.key = callback;
+}
+

@@ -1,11 +1,20 @@
 #include "win32_core.h"
 #include "../internal.h"
 #include "../../Types/StringFunctions.h"
+#include <stdio.h>
+#include <WinUser.h>
+
+unsigned char previousKeyState[256];
+
+LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+void _win32_process_input(UINT Msg);
 
 LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	REWindow* window = (REWindow*)GetPropW(hwnd, L"RE");
 	
+	_win32_process_input(uMsg);
+
 	if (window)
 	{
 		switch (uMsg)
@@ -29,7 +38,7 @@ LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-DBool win32_create_window(REWindow* window, REWindowSettings* windowSettings)
+DBool _win32_create_window(REWindow* window, REWindowSettings* windowSettings)
 {
 	if (!_win32_create_window_instance(window, windowSettings))
 	{
@@ -88,6 +97,35 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 	return TRUE;
 }
 
+void _win32_process_input(UINT Msg)
+{
+	unsigned char keys[256];
+
+	if (!GetKeyboardState(keys))
+		return;
+
+	for (int i = 48; i < 90; i++)
+		if (Msg == WM_KEYDOWN && GetAsyncKeyState(i))
+		{
+			if (relib.callbacks.key != NULL)
+			{
+				if (GetAsyncKeyState(i) !=
+					previousKeyState[i])
+					relib.callbacks.key(i, 1);
+				relib.callbacks.key(i, 2);
+			}
+		}
+		else if(Msg == WM_KEYUP && previousKeyState[i] != keys[i])
+		{
+			if (relib.callbacks.key != NULL)
+				relib.callbacks.key(i, 0);
+		}
+
+
+	for (int i = 48; i < 90; i++)
+		previousKeyState[i] = GetAsyncKeyState(i);
+}
+
 void _win32_poll_events()
 {
 	if (!relib.windows[0])
@@ -106,3 +144,4 @@ void _win32_free_window(REWindow* window)
 {
 	FREE(window->win32);
 }
+

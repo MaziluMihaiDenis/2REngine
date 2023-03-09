@@ -17,12 +17,12 @@ void Engine::FirstStart()
 
 void Engine::Begin()
 {
-	if (sys_mkdir("C:\\Users\\mazil\\Documents", "mylifebelike"))
+	if (sys_mkdir("C:\\Users\\mazil\\Documents", "mylifebelike") == 1)
 		FirstStart();
 	WindowManager::GetInstance()->InitWindow();
 }
 
-void Engine::Loop()
+void Engine::Loop(float deltaTime)
 {
 }
 

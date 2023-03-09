@@ -20,4 +20,4 @@
 
 #define PLATFORM_CONTEXT \
 			WIN32_CONTEXT \
-			NOTHING		   
+			NOTHING		 
