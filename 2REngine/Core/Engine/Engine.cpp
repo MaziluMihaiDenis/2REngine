@@ -2,6 +2,7 @@
 #include "WindowManager.h"
 #include "../../2relibrary.h"
 #include "../../Constants.h"
+#include "Classes/EmptyWorldObject.h"
 
 void Engine::FirstStart()
 {
@@ -20,6 +21,10 @@ void Engine::Begin()
 	if (sys_mkdir("C:\\Users\\mazil\\Documents", "mylifebelike") == 1)
 		FirstStart();
 	WindowManager::GetInstance()->InitWindow();
+
+	EmptyWorldObject* obj = new EmptyWorldObject();
+	obj->AddComponent<Component>();
+	obj->GetComponent<Component>();
 }
 
 void Engine::Loop(float deltaTime)

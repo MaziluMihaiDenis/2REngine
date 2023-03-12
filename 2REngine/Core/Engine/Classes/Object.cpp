@@ -1,7 +1,11 @@
 #include "Object.h"
 #include <typeindex>
+#include <string>
 
-ClassName Object::GetClassName()
+void Object::Start() {}
+void Object::Loop(float deltaTime) {}
+void Object::Destroy(float time) 
 {
-    return typeid(this).name();
+    if (time == 0.f)
+        free(this);
 }
