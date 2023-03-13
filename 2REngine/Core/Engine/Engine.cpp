@@ -2,7 +2,7 @@
 #include "WindowManager.h"
 #include "../../2relibrary.h"
 #include "../../Constants.h"
-#include "Classes/EmptyWorldObject.h"
+#include "Classes/WorldObjects/EmptyWorldObject.h"
 
 void Engine::FirstStart()
 {

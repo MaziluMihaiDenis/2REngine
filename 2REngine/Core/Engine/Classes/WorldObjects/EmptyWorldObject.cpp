@@ -6,7 +6,7 @@ void EmptyWorldObject::Start()
 
 void EmptyWorldObject::Loop(float deltaTime)
 {
-	for (Object*& child : Children)
+	for (EmptyWorldObject*& child : Children)
 		child->Loop(deltaTime);
 	for (Component*& component : Components)
 		component->Loop(deltaTime);
@@ -22,21 +22,32 @@ void EmptyWorldObject::RemoveComponent(Component* component)
 		}
 }
 
-void EmptyWorldObject::AddChild(Object* child)
+void EmptyWorldObject::AddChild(EmptyWorldObject* child)
 {
+	child->SetParent(this);
 }
 
-void EmptyWorldObject::RemoveChild(Object* child)
+void EmptyWorldObject::RemoveChild(EmptyWorldObject* child)
 {
+	for (std::vector<EmptyWorldObject*>::iterator i = Children.begin(); i != Children.end(); i++)
+		if (child == *i)
+		{
+			Children.erase(i);
+			break;
+		}
+	child->SetParent(nullptr);
 }
 
-std::vector<Object> EmptyWorldObject::GetChildren()
+std::vector<EmptyWorldObject*> EmptyWorldObject::GetChildren()
 {
-	return std::vector<Object>();
+	return Children;
 }
 
 Object* EmptyWorldObject::GetChildByName(const char* name)
 {
+	for(EmptyWorldObject* child : Children)
+		if(child->Name == name)
+			return child;
 	return nullptr;
 }
 

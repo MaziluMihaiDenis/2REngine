@@ -1,5 +1,6 @@
 #pragma once
 
+#include <typeinfo>
 #include <vector>
 
 #define NAME_OF_CLASS(T) typeid(T).name()

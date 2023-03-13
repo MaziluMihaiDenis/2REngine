@@ -2,13 +2,17 @@
 
 #include "../Object.h"
 #include "../Component/Component.h"
+#include <string>
 
 class EmptyWorldObject : public Object
 {
 private:
-	std::vector<Object*> Children;
+	std::vector<EmptyWorldObject*> Children;
 	std::vector<Component*> Components;
 	EmptyWorldObject* Parent;
+public:
+	char* Name;
+
 public:
 	virtual void Start();
 	virtual void Loop(float deltaTime) override;
@@ -23,9 +27,9 @@ public:
 	T* GetComponent();
 
 public:
-	void AddChild(Object* child);
-	void RemoveChild(Object* child);
-	std::vector<Object> GetChildren();
+	void AddChild(EmptyWorldObject* child);
+	void RemoveChild(EmptyWorldObject* child);
+	std::vector<EmptyWorldObject*> GetChildren();
 	Object* GetChildByName(const char* name);
 	/// 0 = first child
 	Object* GetChildByIndex(int index);
@@ -54,5 +58,5 @@ inline T* EmptyWorldObject::GetComponent()
 template<typename T>
 inline T* EmptyWorldObject::GetParent()
 {
-	return (T)Parent;
+	return (T*)Parent;
 }
