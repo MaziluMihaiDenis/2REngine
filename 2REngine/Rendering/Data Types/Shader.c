@@ -39,7 +39,12 @@ ShaderProgram generate_shader(const char* vertexFn, const char* fragmentFn)
     return shader;
 }
 
-void use_shader(ShaderProgram shader)
+void _use_shader(ShaderProgram shader)
 {
     glUseProgram(shader.ID);
+}
+
+void _unuse_shader()
+{
+    glUseProgram(0);
 }

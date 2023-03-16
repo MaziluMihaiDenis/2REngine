@@ -12,5 +12,5 @@ struct BufferObject
 BufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned int* indices, unsigned int isize);
 
 // Set to 0 for unbind
-void _bind_buffer_object(BufferObject* obj);
-void _free_buffer_object(BufferObject* obj);
+void _bind_buffer_object(BufferObject obj);
+void _unbind_buffer_object();

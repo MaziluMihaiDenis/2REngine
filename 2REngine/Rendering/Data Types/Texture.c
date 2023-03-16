@@ -44,8 +44,14 @@ Texture* generate_texture(const char* filename)
 	return texture;
 }
 
-void bind_texture(Texture texture)
+void _bind_texture(Texture texture)
 {
 	glActiveTexture(texture.slot);
 	glBindTexture(GL_TEXTURE_2D, texture.ID);
+}
+
+void _unbind_texture()
+{
+	glActiveTexture(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }

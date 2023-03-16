@@ -8,5 +8,6 @@ struct ShaderProgram
 };
 
 ShaderProgram generate_shader(const char* vertexFn, const char* fragmentFn);
-void use_shader(ShaderProgram shader);
+void _use_shader(ShaderProgram shader);
+void _unuse_shader();
 

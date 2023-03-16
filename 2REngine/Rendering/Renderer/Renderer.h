@@ -1,19 +1,15 @@
 #pragma once
 
-extern "C"
-{
-	#include "../Data Types/BufferObject.h"
-}
-
+#include "../../Core/Engine/Classes/Component/DisplayObject.h"
 #include <vector>
 
 class Renderer
 {
 private:
-	std::vector<BufferObject*> RegisteredObjects;
+	std::vector<DisplayObject*> RegisteredObjects;
 private:
 	void RenderLoop();
 public:
-	void RegisterBufferObject(BufferObject* object);
-	void UnregisterBufferObject(BufferObject* object);
+	void RegisterDisplayObject(DisplayObject* object);
+	void UnregisterDisplayObject(DisplayObject* object);
 };

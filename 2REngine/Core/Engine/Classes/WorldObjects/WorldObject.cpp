@@ -3,6 +3,7 @@
 void WorldObject::SetPosition(Vector2D& translation)
 {
 	transformation.RelativePosition = transformation.Position = translation;
+	Updated = true;
 
 	if (WorldObject* parent = GetParent<WorldObject>())
 		transformation.RelativePosition = parent->GetPosition() - translation;
@@ -16,6 +17,7 @@ void WorldObject::SetPosition(Vector2D& translation)
 void WorldObject::SetSize(Vector2D& scale)
 {
 	transformation.RelativeSize = transformation.Size = scale;
+	Updated = true;
 
 	if (WorldObject* parent = GetParent<WorldObject>())
 		transformation.RelativeSize = parent->GetSize() - scale;
@@ -28,6 +30,7 @@ void WorldObject::SetSize(Vector2D& scale)
 void WorldObject::SetRotation(float rotation)
 {
 	transformation.RelativeRotation = transformation.Rotation = rotation;
+	Updated = true;
 
 	if (WorldObject* parent = GetParent<WorldObject>())
 		transformation.RelativeRotation = parent->GetRotation() - rotation;

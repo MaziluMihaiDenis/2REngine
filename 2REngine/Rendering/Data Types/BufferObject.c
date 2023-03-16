@@ -35,13 +35,14 @@ BufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned 
 	return obj;
 }
 
-void _bind_buffer_object(BufferObject* obj)
+void _bind_buffer_object(BufferObject obj)
 {
-	glBindVertexArray(obj->vertexArray);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->indexBuffer);
+	glBindVertexArray(obj.vertexArray);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.indexBuffer);
 }
 
-void _free_buffer_object(BufferObject* obj)
+void _unbind_buffer_object()
 {
-	FREE(obj);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

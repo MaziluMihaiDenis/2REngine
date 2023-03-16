@@ -3,6 +3,8 @@
 
 class Component : public Object
 {
+protected:
+	bool Updated;
 public:
 	bool Enabled;
 

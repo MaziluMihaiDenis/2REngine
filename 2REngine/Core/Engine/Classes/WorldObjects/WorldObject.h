@@ -5,6 +5,9 @@
 
 class WorldObject : public EmptyWorldObject
 {
+protected:
+	bool Updated;
+
 private:
 	Transformation2D transformation;
 
