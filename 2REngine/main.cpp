@@ -3,6 +3,8 @@
 #include "Core/Engine/Engine.h"
 #include "External/Glad/glad.h"
 #include "Core/Types/Debug/debug.h"
+#include "Core/Engine/Classes/Component/DisplayComponent.h"
+#include "Rendering/Renderer/Renderer.h"
 
 int main()
 {
@@ -28,6 +30,9 @@ int main()
     glViewport(0, 0, winWidth, winHeight); 
 
     delta = 0.0;
+
+    DisplayComponent* comp = new DisplayComponent();
+    Renderer::GetInstance()->RegisterDisplayObject(comp);
 
     while (mainWindow->running)
     {

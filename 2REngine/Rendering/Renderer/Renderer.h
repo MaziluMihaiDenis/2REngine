@@ -1,15 +1,18 @@
 #pragma once
 
-#include "../../Core/Engine/Classes/Component/DisplayObject.h"
+#include "../../Core/Engine/Classes/Component/DisplayComponent.h"
 #include <vector>
 
 class Renderer
 {
+	friend class Engine;
 private:
-	std::vector<DisplayObject*> RegisteredObjects;
+	static inline Renderer* Instance;
+	std::vector<DisplayComponent*> RegisteredObjects;
 private:
 	void RenderLoop();
 public:
-	void RegisterDisplayObject(DisplayObject* object);
-	void UnregisterDisplayObject(DisplayObject* object);
+	void RegisterDisplayObject(DisplayComponent* object);
+	void UnregisterDisplayObject(DisplayComponent* object);
+	static Renderer* GetInstance();
 };

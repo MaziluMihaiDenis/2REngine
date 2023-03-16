@@ -3,7 +3,7 @@
 #include "../../External/Glad/glad.h"
 #include "../../Core/Types/RECore.h"
 
-Texture* generate_texture(const char* filename)
+Texture* _generate_texture(const char* filename)
 {
 	Texture* texture;
 
@@ -34,7 +34,7 @@ Texture* generate_texture(const char* filename)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	stbi_image_free(&data);
+	stbi_image_free(data);
 
 	texture->filename = filename;
 	texture->width = width;

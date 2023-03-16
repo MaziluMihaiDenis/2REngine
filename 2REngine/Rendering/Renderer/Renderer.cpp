@@ -4,23 +4,28 @@
 
 void Renderer::RenderLoop()
 {
-	for (DisplayObject* object : RegisteredObjects)
-	{
-		glDrawElements(GL_TRIANGLES, object->indicesSize, GL_UNSIGNED_INT, (void*)(*object->indices));
-	}
+	for (DisplayComponent* object : RegisteredObjects)
+		object->Render();
 }
 
-void Renderer::RegisterDisplayObject(DisplayObject* object)
+void Renderer::RegisterDisplayObject(DisplayComponent* object)
 {
 	RegisteredObjects.push_back(object);
 }
 
-void Renderer::UnregisterDisplayObject(DisplayObject* object)
+void Renderer::UnregisterDisplayObject(DisplayComponent* object)
 {
-	for (std::vector<DisplayObject*>::iterator i = RegisteredObjects.begin(); i != RegisteredObjects.end(); i++)
+	for (std::vector<DisplayComponent*>::iterator i = RegisteredObjects.begin(); i != RegisteredObjects.end(); i++)
 		if (*i == object)
 		{
 			RegisteredObjects.erase(i);
 			break;
 		}
+}
+
+Renderer* Renderer::GetInstance()
+{
+	if (Instance == nullptr)
+		Instance = new Renderer();
+	return Instance;
 }

@@ -9,7 +9,7 @@ struct Texture
 	const char* filename;
 };
 
-Texture* generate_texture(const char* filename);
+Texture* _generate_texture(const char* filename);
 void _bind_texture(Texture texture);
 void _unbind_texture();
 

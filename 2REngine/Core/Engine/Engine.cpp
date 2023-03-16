@@ -3,6 +3,8 @@
 #include "../../2relibrary.h"
 #include "../../Constants.h"
 #include "Classes/WorldObjects/EmptyWorldObject.h"
+#include "../../Rendering/Renderer/Renderer.h"
+#include "../../External/stb_image/stb_image.h"
 
 void Engine::FirstStart()
 {
@@ -21,14 +23,12 @@ void Engine::Begin()
 	if (sys_mkdir("C:\\Users\\mazil\\Documents", "mylifebelike") == 1)
 		FirstStart();
 	WindowManager::GetInstance()->InitWindow();
-
-	EmptyWorldObject* obj = new EmptyWorldObject();
-	obj->AddComponent<Component>();
-	obj->GetComponent<Component>();
+	stbi_set_flip_vertically_on_load(1);
 }
 
 void Engine::Loop(float deltaTime)
 {
+	Renderer::GetInstance()->RenderLoop();
 }
 
 void Engine::End()
