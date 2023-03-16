@@ -22,7 +22,7 @@ int main()
     if (!gladLoadGL()) 
     {
         if (DEBUG_MODE_ENABLED)
-            PRINT(ESEVERITY::DEFAULT, "%s", "GL couldn't load!");
+            PRINT(0, "%s", "GL couldn't load!");
         return 1;
     }
     glViewport(0, 0, winWidth, winHeight); 

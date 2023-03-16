@@ -2,10 +2,10 @@
 #include "../../2relibrary.h"
 #include "../../External/Glad/glad.h"
 
-DBufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned int* indices, unsigned int isize)
+BufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned int* indices, unsigned int isize)
 {
-	DBufferObject* obj;
-	if (!MALLOC(obj, sizeof(DBufferObject)))
+	BufferObject* obj;
+	if (!MALLOC(obj, sizeof(BufferObject)))
 		return;
 
 	obj->indices = indices;
@@ -23,8 +23,10 @@ DBufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, isize, indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)(2 * sizeof(float));
+	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -33,13 +35,13 @@ DBufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned
 	return obj;
 }
 
-void _bind_buffer_object(DBufferObject* obj)
+void _bind_buffer_object(BufferObject* obj)
 {
 	glBindVertexArray(obj->vertexArray);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj->indexBuffer);
 }
 
-void _free_buffer_object(DBufferObject* obj)
+void _free_buffer_object(BufferObject* obj)
 {
 	FREE(obj);
 }

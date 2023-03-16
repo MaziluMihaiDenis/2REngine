@@ -127,4 +127,23 @@ int _find_property(FILE** file, const char* path, const char* property)
         }
     return 0;
 }
+
+const char* get_file_contents(const char* filename)
+{
+    FILE *file;
+    int character, i;
+    char* fileCpy;
+
+    if ((file = fopen(filename, "r")) == NULL)
+        return NULL;
+
+    if (!MALLOC(fileCpy, MAX_FILE_DIMM))
+        return NULL;
+
+    i = 0;
+    while ((character = fgetc(file)) != EOF)
+        fileCpy[i] = (char)character, i++;
+
+    return fileCpy;
+}
  

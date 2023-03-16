@@ -1,16 +1,9 @@
 #pragma once
 #include <stdio.h>
 
-enum ESEVERITY
-{
-	DEFAULT,
-	WARN,
-	ERR
-};
-
 #define PRINT(SEVERITY, TYPES, ...) \
-		if(SEVERITY == ESEVERITY::ERR) \
+		if(SEVERITY == -1) \
 			printf(""); \
-		else if(SEVERITY == ESEVERITY::WARN) \
+		else if(SEVERITY == 1) \
 			printf(""); \
-		printf(TYPES "", __VA_ARGS__)
+		printf(TYPES "\n", __VA_ARGS__)

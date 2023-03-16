@@ -8,7 +8,7 @@ extern "C"
 #include "Core/Types/REMath.h"
 #include "Core/Types/StringFunctions.h"
 #include "Core/Application/internal.h"
-#include "Core/Engine/Filesystem.h"
+#include "Core/Types/Filesystem.h"
 #if defined(__cplusplus)
 };
 #endif
