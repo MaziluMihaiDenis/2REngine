@@ -19,7 +19,7 @@ void DisplayComponent::Render()
 {
 	Bind();
 
-	glDrawElements(GL_TRIANGLES, DisplayBuffer->indicesSize, GL_UNSIGNED_INT, (void*)(*DisplayBuffer->indices));
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	Unbind();
 }
@@ -27,10 +27,10 @@ void DisplayComponent::Render()
 DisplayComponent::DisplayComponent()
 {
 	float vertices[] = {
-		-1.f, -1.f,
-		1.f, -1.f,
-		1.f, 1.f,
-		-1.f, 1.f
+		-1.f, -1.f,		0.f, 0.f,
+		 1.f, -1.f,		1.f, 0.f,
+		 1.f, 1.f,		1.f, 1.f,
+		-1.f, 1.f,		0.f, 1.f		
 	};
 	unsigned int indices[]{ 0, 1, 2, 2, 3, 0 };
 

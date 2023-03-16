@@ -38,11 +38,9 @@ BufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned 
 void _bind_buffer_object(BufferObject obj)
 {
 	glBindVertexArray(obj.vertexArray);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj.indexBuffer);
 }
 
 void _unbind_buffer_object()
 {
 	glBindVertexArray(0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
