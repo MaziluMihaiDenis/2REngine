@@ -25,7 +25,7 @@ BufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned 
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)(2 * sizeof(float));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)(2 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
