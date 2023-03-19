@@ -13,6 +13,8 @@ ShaderProgram* _generate_shader(const char* vertexFn, const char* fragmentFn)
     const char* vertexSrc = get_file_contents(vertexFn);
     const char* fragmentSrc = get_file_contents(fragmentFn);
 
+    printf(vertexSrc);
+
     if (!MALLOC(shader, sizeof(ShaderProgram)))
         return NULL;
 

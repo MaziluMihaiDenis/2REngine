@@ -31,6 +31,7 @@ void _win32_connect()
 		_win32_swap_buffers,
 		_win32_get_monitor_size,
 		_win32_get_current_time_ms,
-		_win32_get_time_frequency
+		_win32_get_time_frequency,
+		_win32_destroy_context
 	};
 }

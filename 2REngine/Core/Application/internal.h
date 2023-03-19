@@ -40,6 +40,7 @@ struct REPlatform
 	void(*platform_free_window)(REWindow*);
 	DBool(*platform_set_context_current)(REWindow*);
 	void(*platform_swap_buffers)(REWindow*);
+	void(*platform_destroy_context)(REWindow*);
 	void(*platform_get_monitor_size)(int*, int*);
 	int(*platform_get_time_ms)();
 	int(*platform_get_time_frequency)();
@@ -91,6 +92,7 @@ void re_free_window(REWindow* window);
 
 void re_set_context_current(REWindow* window);
 void re_swap_buffers(REWindow* window);
+void re_destroy_context(REWindow* window);
 
 void re_get_monitor_size(int *width, int *height);
 void re_set_key_callback(REKeyCallback callback);

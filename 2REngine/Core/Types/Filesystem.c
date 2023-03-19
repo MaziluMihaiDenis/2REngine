@@ -143,6 +143,7 @@ const char* get_file_contents(const char* filename)
     i = 0;
     while ((character = fgetc(file)) != EOF)
         fileCpy[i] = (char)character, i++;
+    fileCpy[i] = '\0';
 
     return fileCpy;
 }

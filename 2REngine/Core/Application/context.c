@@ -11,3 +11,8 @@ void re_swap_buffers(REWindow* window)
 	relib.platform->platform_swap_buffers(window);
 }
 
+void re_destroy_context(REWindow* window)
+{
+	relib.platform->platform_destroy_context(window);
+}
+

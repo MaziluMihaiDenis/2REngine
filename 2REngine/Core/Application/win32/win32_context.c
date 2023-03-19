@@ -96,18 +96,13 @@ DBool _win32_set_context_current(REWindow* window)
 {
 	if (window)
 	{
-		HDC dc = GetDC(window->win32->windowHandle);
-		if (!wglMakeCurrent(dc, window->context->win32->hglrc))
-		{
+		if (!wglMakeCurrent(relib.win32.deviceContext, window->context->win32->hglrc))
 			return FALSE;
-		}
 	}
 	else
 	{
 		if (!wglMakeCurrent(NULL, NULL))
-		{
 			return FALSE;
-		}
 	}
 	return TRUE;
 }
@@ -119,7 +114,13 @@ DBool _win32_init_gl()
 	return TRUE;
 }
 
+void _win32_destroy_context(struct REWindow* window)
+{
+	_win32_set_context_current(NULL);
+	wglDeleteContext(window->context->win32->hglrc);
+}
+
 void _win32_swap_buffers(REWindow* window)
 {
-	SwapBuffers(GetDC(window->win32->windowHandle));
+	SwapBuffers(relib.win32.deviceContext);
 }
