@@ -14,7 +14,7 @@ int sys_mkdir(const char* path, const char* dir_name);
 	writes the specified contents in a file
 	returns 1 for success, 0 for failure
 */
-int sys_write_file(const char* path, char* format, ...);
+int sys_write_file(const char* path, const char* format, ...);
 
 /*
 	gets a property's value from a file 

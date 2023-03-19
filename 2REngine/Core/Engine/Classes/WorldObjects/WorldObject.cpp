@@ -8,10 +8,13 @@ void WorldObject::SetPosition(Vector2D& translation)
 	if (WorldObject* parent = GetParent<WorldObject>())
 		transformation.RelativePosition = parent->GetPosition() - translation;
 
-
+	Vector2D childPos;
 	for (EmptyWorldObject* child : GetChildren())
 		if (WorldObject* wObj = (WorldObject*)child)
-			wObj->SetPosition(translation + wObj->GetRelativePosition());
+		{
+			childPos = translation + wObj->GetRelativePosition();
+			wObj->SetPosition(childPos);
+		}
 }
 
 void WorldObject::SetSize(Vector2D& scale)
@@ -22,9 +25,13 @@ void WorldObject::SetSize(Vector2D& scale)
 	if (WorldObject* parent = GetParent<WorldObject>())
 		transformation.RelativeSize = parent->GetSize() - scale;
 
+	Vector2D childSize;
 	for (EmptyWorldObject* child : GetChildren())
 		if (WorldObject* wObj = (WorldObject*)child)
-			wObj->SetSize(scale + wObj->GetRelativeSize());
+		{
+			childSize = scale + wObj->GetRelativeSize();
+			wObj->SetSize(childSize);
+		}
 }
 
 void WorldObject::SetRotation(float rotation)

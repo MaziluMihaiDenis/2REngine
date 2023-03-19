@@ -6,7 +6,7 @@ BufferObject* _make_buffer_object(float* vertices, unsigned int vsize, unsigned 
 {
 	BufferObject* obj;
 	if (!MALLOC(obj, sizeof(BufferObject)))
-		return;
+		return NULL;
 
 	obj->indices = indices;
 	obj->indicesSize = isize;

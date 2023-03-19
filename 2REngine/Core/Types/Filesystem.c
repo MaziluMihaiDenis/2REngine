@@ -31,7 +31,7 @@ int sys_mkdir(const char* path, const char* dir_name)
     return (success == 0) ? 1 : 0;
 }
 
-int sys_write_file(const char* path, char* format, ...)
+int sys_write_file(const char* path, const char* format, ...)
 {
     char *ptr, cpy[100];
     va_list args;
@@ -65,7 +65,7 @@ int sys_write_file(const char* path, char* format, ...)
     va_end(args);
 
     fprintf(file, "%c", '\n');
-    file = fclose(file);
+    fclose(file);
 
     return 1;
 }
@@ -89,7 +89,7 @@ char* sys_get_file_property_as_string(const char* path, const char* property)
     FILE* fout;
 
     if (!_find_property(&fout, path, property))
-        return -1;
+        return NULL;
 
     fscanf(fout, "%s", value);
 
@@ -111,7 +111,7 @@ float sys_get_file_property_as_float(const char* path, const char* property)
 
 int _find_property(FILE** file, const char* path, const char* property)
 {
-    char *ptr, *output, *o;
+    char *output;
 
     if ((*file = fopen(path, "r")) == NULL)
         return 0;

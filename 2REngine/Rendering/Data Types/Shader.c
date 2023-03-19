@@ -10,8 +10,8 @@ ShaderProgram* _generate_shader(const char* vertexFn, const char* fragmentFn)
     unsigned int vertID, fragID;
     int ok = 0;
 
-    const char* vertexSrc = get_file_contents(vertexFn);
-    const char* fragmentSrc = get_file_contents(fragmentFn);
+    char const* vertexSrc = get_file_contents(vertexFn);
+    char const* fragmentSrc = get_file_contents(fragmentFn);
 
     printf(vertexSrc);
 
