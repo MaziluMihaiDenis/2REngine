@@ -142,7 +142,6 @@ DBool _win32_init_gl()
 	_win32_destroy_context(window);
 	FREE(window);
 
-	PRINT(0, "False context successfully created\n");
 	return TRUE;
 }
 

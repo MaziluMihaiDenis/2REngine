@@ -24,7 +24,7 @@ int main()
     re_set_context_current(mainWindow);
     glViewport(0, 0, winWidth, winHeight); 
 
-    printf("%s\n", glGetString(GL_VERSION));
+    PRINT(0, "%s", glGetString(GL_VERSION));
 
     delta = 0.0;
 
