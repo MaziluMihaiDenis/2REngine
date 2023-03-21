@@ -5,9 +5,9 @@ typedef struct REWindowSettings REWindowSettings;
 typedef struct RELibrary RELibrary;
 typedef struct REPlatform REPlatform;
 typedef struct REWindow REWindow;
-typedef struct REContextSettings REContextSettings;
 typedef struct REContext REContext;
 typedef struct RESystem RESystem;
+typedef struct REContextSettings REContextSettings;
 
 // TODO: Implement RESystem
 
@@ -15,20 +15,19 @@ typedef void(*REKeyCallback)(int, int);
 
 struct REWindowSettings
 {
-	char *name;
 	int offsetX, offsetY;
 	int width, height;
 	int style;
+    DBool resizable;
+    DBool focused;
+    DBool maximized;
+    DBool visible;
 };
 
 struct REContextSettings
 {
 	int minor, major, profile;
-};
-
-struct RESystem
-{
-	int screenWidth, screenHeight;
+    DBool forward;
 };
 
 struct REPlatform
@@ -49,7 +48,6 @@ struct REPlatform
 struct RELibrary
 {
 	REPlatform* platform;
-	RESystem system;
 	REWindow** windows;
 
 	int windows_count;
@@ -58,6 +56,22 @@ struct RELibrary
 	{
 		REKeyCallback key;
 	} callbacks;
+
+	struct {
+        struct {
+            int redBits, greenBits, blueBits, alphaBits;
+            int depthBits, stencilBits;
+            int accumRedBits, accumGreenBits, accumBlueBits, accumAlphaBits;
+            int auxBuffers;
+            DBool stereo;
+            DBool doubleBuffer;
+            DBool transparent;
+            int samples;
+            DBool sRGB;
+        } framebuffer;
+	} hints;
+
+	int attribList[30];
 
 	PLATFORM_LIBRARY
 };
@@ -76,6 +90,7 @@ struct REWindow
 	REWindowSettings* settings;
 	DBool fullscreen;
 	DBool running;
+    char* name;
 
 	PLATFORM_WINDOW
 };
@@ -86,13 +101,16 @@ REWindow* re_get_window(int index);
 DBool re_init();
 void re_terminate();
 
-REWindow* re_create_window(REWindowSettings* settings, DBool fullscreen, REWindow* share);
+REWindow* re_create_window(REWindowSettings* settings, const char* title, DBool fullscreen, REWindow* share);
 void re_poll_events();
 void re_free_window(REWindow* window);
+int re_add_window_hints(int attrib, int value);
+int re_get_hint(int attrib);
 
 void re_set_context_current(REWindow* window);
 void re_swap_buffers(REWindow* window);
 void re_destroy_context(REWindow* window);
+void re_set_window_color(float r, float g, float b, float a);
 
 void re_get_monitor_size(int *width, int *height);
 void re_set_key_callback(REKeyCallback callback);

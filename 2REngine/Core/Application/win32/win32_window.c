@@ -38,13 +38,13 @@ LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-DBool _win32_create_window(REWindow* window, REWindowSettings* windowSettings)
+DBool _win32_create_window(struct REWindow* window, struct REWindowSettings* winSet, struct REContextSettings* ctxSet)
 {
-	if (!_win32_create_window_instance(window, windowSettings))
+	if (!_win32_create_window_instance(window, winSet))
 	{
 		return FALSE;
 	}
-	if (!_win32_create_context(window, NULL))
+	if (!_win32_create_context(window, ctxSet))
 	{
 		FREE(window->win32);
 		return FALSE;
@@ -68,7 +68,7 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 
 	RegisterClass(&wndClass);
 
-	wideTitle = char_to_wchar_t(windowSettings->name);
+	wideTitle = char_to_wchar_t(window->name);
 
 	win32_window->windowHandle = CreateWindowEx(
 		windowSettings->style,
@@ -88,10 +88,12 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 		return FALSE;
 	}
 
-	ShowWindow(win32_window->windowHandle, SW_SHOW);
-	SetPropW(win32_window->windowHandle, L"RE", window);
+	if (windowSettings->visible)
+	{
+		ShowWindow(win32_window->windowHandle, SW_SHOW);
+		SetPropW(win32_window->windowHandle, L"RE", window);
+	}
 
-	relib.win32.deviceContext = GetDC(win32_window->windowHandle);
 	window->win32 = win32_window;
 
 	return TRUE;

@@ -5,6 +5,7 @@
 #include "Core/Types/Debug/debug.h"
 #include "Core/Engine/Classes/Component/DisplayComponent.h"
 #include "Rendering/Renderer/Renderer.h"
+#include <Constants.h>
 
 int main()
 {
@@ -21,23 +22,20 @@ int main()
     winHeight = mainWindow->settings->height;
 
     re_set_context_current(mainWindow);
-    if (!gladLoadGL()) 
-    {
-        if (DEBUG_MODE_ENABLED)
-            PRINT(0, "%s", "GL couldn't load!");
-        return 1;
-    }
     glViewport(0, 0, winWidth, winHeight); 
+
+    printf("%s\n", glGetString(GL_VERSION));
 
     delta = 0.0;
 
-    DisplayComponent* comp = new DisplayComponent();
-    Renderer::GetInstance()->RegisterDisplayObject(comp);
+    DisplayComponent* dc = new DisplayComponent();
+    Renderer::GetInstance()->RegisterDisplayObject(dc);
 
     while (mainWindow->running)
     {
         startTime = re_get_time_ms();
 
+        re_set_window_color(NICE_COLOR);
         re_poll_events();
 
         Engine::GetInstance()->Loop(delta);

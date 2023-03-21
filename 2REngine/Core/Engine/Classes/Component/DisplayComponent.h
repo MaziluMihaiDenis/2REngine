@@ -1,11 +1,8 @@
 #pragma once
 
-extern "C"
-{
-#include "../../../../Rendering/Data Types/BufferObject.h"
-#include "../../../../Rendering/Data Types/Shader.h"
-#include "../../../../Rendering/Data Types/Texture.h"
-}
+#include <VertexArray.h>
+#include <ShaderProgram.h>
+#include <Texture.h>
 #include "Component.h"
 
 class DisplayComponent : public Component
@@ -15,7 +12,7 @@ class DisplayComponent : public Component
 private:
 	Texture* DisplayTexture;
 	ShaderProgram* DisplayShader;
-	BufferObject* DisplayBuffer;
+	VertexArray* DisplayVertexArray;
 
 private:
 	void Bind();

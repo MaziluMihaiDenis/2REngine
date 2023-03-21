@@ -13,7 +13,7 @@ private:
 
 	void InitWindow();
 public:
-	struct REWindow* AddWindow(struct REWindowSettings* settings, struct REWindow* share, DBool fullscreen);
+	struct REWindow* AddWindow(struct REWindowSettings* settings, const char* name, struct REWindow* share, DBool fullscreen);
 	bool CloseWindow(struct REWindow* window);
 	struct REWindow* GetWindow(int index);
 public:

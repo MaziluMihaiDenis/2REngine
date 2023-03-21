@@ -1,23 +1,36 @@
 #include "win32_core.h"
 #include "../internal.h"
+#include <Glad/glad_wgl.h>
+#include <Debug/debug.h>
 
-// TODO: use gl extensions for pixel format
-
-DBool _choose_pixel_format(REWindow* window, REContextSettings* settings)
+DBool _wgl_choose_pixel_format(REWindow* window)
 {
-	if (!_wgl_choose_pixel_format(window, settings))
-		if (!_win32_choose_pixel_format(window, settings))
-			return FALSE;
+	int attribList[] = {
+		WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,
+		WGL_SUPPORT_OPENGL_ARB, GL_TRUE,
+		WGL_DOUBLE_BUFFER_ARB, GL_TRUE,
+		WGL_ACCELERATION_ARB, WGL_FULL_ACCELERATION_ARB,
+		WGL_PIXEL_TYPE_ARB, WGL_TYPE_RGBA_ARB,
+		WGL_COLOR_BITS_ARB, 32,
+		WGL_DEPTH_BITS_ARB, 24,
+		WGL_STENCIL_BITS_ARB, 8,
+		0
+	};
+
+	int pixelFormat = 0;
+	UINT numFormats = 0;
+	PIXELFORMATDESCRIPTOR pfd = {0};
+	HDC dc = GetDC(window->win32->windowHandle);
+
+	wglChoosePixelFormatARB(dc, attribList, NULL, 1, &pixelFormat, &numFormats);
+
+	DescribePixelFormat(dc, pixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
+	SetPixelFormat(dc, pixelFormat, &pfd);
 
 	return TRUE;
 }
 
-DBool _wgl_choose_pixel_format(REWindow* window, REContextSettings* settings)
-{
-	return FALSE;
-}
-
-DBool _win32_choose_pixel_format(REWindow* window, REContextSettings* settings)
+DBool _choose_pixel_format(REWindow* window)
 {
 	if (!window)
 	{
@@ -52,7 +65,7 @@ DBool _win32_choose_pixel_format(REWindow* window, REContextSettings* settings)
 		return FALSE;
 	}
 
-	SetPixelFormat(relib.win32.deviceContext, pixelFormat, &pfd);
+	SetPixelFormat(dc, pixelFormat, &pfd);
 
 	return TRUE;
 }
@@ -61,6 +74,7 @@ DBool _win32_create_context(REWindow* window, REContextSettings* settings)
 {
 	REContext* context;
 	win32Context* win32_context;
+	HDC dc = GetDC(window->win32->windowHandle);
 
 	if (!MALLOC(win32_context, sizeof(win32Context)))
 		return FALSE;
@@ -71,23 +85,25 @@ DBool _win32_create_context(REWindow* window, REContextSettings* settings)
 		return FALSE;
 	}
 
-	if (!_choose_pixel_format(window, settings))
+	if (settings)
 	{
-		FREE(context);
-		FREE(win32_context);
-		return FALSE;
-	}
+		int openGLAttributes[] = {
+			WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
+			WGL_CONTEXT_MINOR_VERSION_ARB, 3,
+			WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+			0
+		};
 
-	if (!(win32_context->hglrc = wglCreateContext(relib.win32.deviceContext)))
+		_wgl_choose_pixel_format(window);
+		win32_context->hglrc = wglCreateContextAttribsARB(dc, 0, openGLAttributes); // NULL
+	}
+	else
 	{
-		FREE(context);
-		FREE(win32_context);
-		return FALSE;	
+		_choose_pixel_format(window, settings);
+		win32_context->hglrc = wglCreateContext(dc);
 	}
-
 	context->win32 = win32_context;
-	if(window)
-		window->context = context;
+	window->context = context;
 
 	return TRUE;
 }
@@ -96,21 +112,37 @@ DBool _win32_set_context_current(REWindow* window)
 {
 	if (window)
 	{
-		if (!wglMakeCurrent(relib.win32.deviceContext, window->context->win32->hglrc))
+		HDC dc = GetDC(window->win32->windowHandle);
+		relib.win32.deviceContext = dc;
+		if (!wglMakeCurrent(dc, window->context->win32->hglrc))
 			return FALSE;
+		return TRUE;
 	}
-	else
-	{
-		if (!wglMakeCurrent(NULL, NULL))
-			return FALSE;
-	}
+	wglMakeCurrent(NULL, NULL);
 	return TRUE;
 }
 
 DBool _win32_init_gl()
 {
-	//if (!_win32_create_context(0, 0))
-	//	LOG_ERROR("COULDN'T CREATE A FALSE CONTEXT");
+	REWindow* window;
+	REWindowSettings wind_settings = {0};
+
+	if (!MALLOC(window, sizeof(REWindow)))
+		return FALSE;
+
+	_win32_create_window(window, &wind_settings, NULL);
+	_win32_set_context_current(window);
+
+	if (!gladLoadWGL(GetDC(window->win32->windowHandle)))
+		return FALSE;
+
+	if (!gladLoadGL())
+		return FALSE;
+
+	_win32_destroy_context(window);
+	FREE(window);
+
+	PRINT(0, "False context successfully created\n");
 	return TRUE;
 }
 

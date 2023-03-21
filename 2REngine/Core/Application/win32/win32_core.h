@@ -33,7 +33,7 @@ void _win32_terminate();
 DBool _win32_init();
 
 void _win32_poll_events();
-DBool _win32_create_window(struct REWindow* window, struct REWindowSettings* windowSettings);
+DBool _win32_create_window(struct REWindow* window, struct REWindowSettings* winSet, struct REContextSettings* ctxSet);
 DBool _win32_create_window_instance(struct REWindow* window, struct REWindowSettings* windowSettings);
 void _win32_free_window(struct REWindow* window);
 
@@ -42,9 +42,8 @@ DBool _win32_set_context_current(struct REWindow* window);
 DBool _win32_init_gl();
 void _win32_destroy_context(struct REWindow* window);
 
-DBool _choose_pixel_format(struct REWindow* window, struct REContextSettings* settings);
-DBool _wgl_choose_pixel_format(struct REWindow* window, struct REContextSettings* settings);
-DBool _win32_choose_pixel_format(struct REWindow* window, struct REContextSettings* settings);
+DBool _wgl_choose_pixel_format(struct REWindow* window);
+DBool _choose_pixel_format(struct REWindow* window);
 void _win32_swap_buffers(struct REWindow* window);
 
 void _win32_get_monitor_size(int* width, int* height);

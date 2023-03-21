@@ -4,7 +4,7 @@ RELibrary relib;
 
 DBool re_init()
 {
-	if (!(relib.platform = malloc(sizeof(REPlatform))))
+	if (!MALLOC(relib.platform, sizeof(REPlatform)))
 		return FALSE;
 #if defined(_WIN32)
 	_win32_connect();

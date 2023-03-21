@@ -128,7 +128,7 @@ int _find_property(FILE** file, const char* path, const char* property)
     return 0;
 }
 
-const char* get_file_contents(const char* filename)
+char* get_file_contents(const char* filename)
 {
     FILE *file;
     int character, i;

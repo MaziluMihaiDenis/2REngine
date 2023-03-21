@@ -3,16 +3,16 @@
 
 void DisplayComponent::Bind()
 {
-	_bind_buffer_object(*DisplayBuffer);
-	_use_shader(*DisplayShader);
-	_bind_texture(*DisplayTexture);
+	DisplayVertexArray->Bind();
+	DisplayShader->Bind();
+	DisplayTexture->Bind();
 }
 
 void DisplayComponent::Unbind()
 {
-	_unbind_buffer_object();
-	_unuse_shader();
-	_unbind_texture();
+	DisplayVertexArray->Unbind();
+	DisplayShader->Unbind();
+	DisplayTexture->Unbind();
 }
 
 void DisplayComponent::Render()
@@ -34,9 +34,9 @@ DisplayComponent::DisplayComponent()
 	};
 	unsigned int indices[]{ 0, 1, 2, 2, 3, 0 };
 
-	DisplayBuffer = _make_buffer_object(vertices, sizeof(vertices), indices, sizeof(indices));
-	DisplayShader = _generate_shader("2Rengine/Shaders/default_vertex.glsl", "2Rengine/Shaders/default_fragment.glsl");
-	DisplayTexture = _generate_texture("2Rengine/SwagGorilla.png");
+	DisplayVertexArray = new VertexArray(vertices, sizeof(vertices), indices, sizeof(indices));
+	DisplayShader = new ShaderProgram("2Rengine/Shaders/default_vertex.glsl", "2Rengine/Shaders/default_fragment.glsl");
+	DisplayTexture = new Texture("2Rengine/SwagGorilla.png");
 }
 
 void DisplayComponent::Loop(float deltaTime)

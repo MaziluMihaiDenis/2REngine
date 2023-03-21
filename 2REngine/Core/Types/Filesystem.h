@@ -34,4 +34,4 @@ int _find_property(FILE** file, const char* path, const char* property);
 /*
 	returns the contents of a file as a string
 */
-const char* get_file_contents(const char* filename);
+char* get_file_contents(const char* filename);

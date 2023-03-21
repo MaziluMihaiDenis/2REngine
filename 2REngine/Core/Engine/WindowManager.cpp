@@ -13,19 +13,16 @@ void WindowManager::InitWindow()
 
 	REWindowSettings settings
 	{
-		title,
-		0, 0,
-		width, height,
-		0
+		0, 0, width, height, 0, TRUE, TRUE, TRUE, TRUE
 	};
 
-	AddWindow(&settings, NULL, FALSE);
+	AddWindow(&settings, title, NULL, FALSE);
 }
 
-REWindow* WindowManager::AddWindow(REWindowSettings* settings, REWindow* share, DBool fullscreen)
+REWindow* WindowManager::AddWindow(struct REWindowSettings* settings, const char* title, struct REWindow* share, DBool fullscreen)
 {
 	REWindow* window;
-	window = re_create_window(settings, fullscreen, share);
+	window = re_create_window(settings, title, fullscreen, share);
 
 	return window;
 }

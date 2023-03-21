@@ -1,16 +1,19 @@
 #pragma once
 
-typedef struct Texture Texture;
+#include <string>
+
+static unsigned short g_Slot;
 
 struct Texture
 {
-	int ID;
-	unsigned int width, height, slot;
-	const char* filename;
+protected:
+	unsigned short Slot;
+	unsigned int ID;
+	int Width, Height;
+	const char* FileName;
+public:
+	Texture(const char* filename);
+	void Bind();
+	void Unbind();
 };
-
-Texture* _generate_texture(const char* filename);
-void _bind_texture(Texture texture);
-void _unbind_texture();
-
 

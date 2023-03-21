@@ -12,7 +12,7 @@ void Engine::FirstStart()
 
 	re_get_monitor_size(&width, &height);
 
-	sys_mkdir("C:\\Users\\mazil\\Documents\\mylifebelike", "Config");
+	sys_mkdir(SAVED_PATH, "Config");
 	sys_write_file(CONFIG_PATH, "%s%d", "window\\width = ", width);
 	sys_write_file(CONFIG_PATH, "%s%d", "window\\height = ", height);
 	sys_write_file(CONFIG_PATH, "%s%s", "window\\title = ", APPLICATION_TITLE);
@@ -20,7 +20,7 @@ void Engine::FirstStart()
 
 void Engine::Begin()
 {
-	if (sys_mkdir("C:\\Users\\mazil\\Documents", "mylifebelike") == 1)
+	if (sys_mkdir(SAVED_PATH, "mylifebelike") == 1)
 		FirstStart();
 	WindowManager::GetInstance()->InitWindow();
 	stbi_set_flip_vertically_on_load(1);
