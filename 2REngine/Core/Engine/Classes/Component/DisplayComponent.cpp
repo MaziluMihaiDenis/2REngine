@@ -1,6 +1,8 @@
 #include "DisplayComponent.h"
 #include "../../../../External/Glad/glad.h"
 
+#define RATIO 1080/1920
+
 void DisplayComponent::Bind()
 {
 	DisplayVertexArray->Bind();
@@ -24,13 +26,30 @@ void DisplayComponent::Render()
 	Unbind();
 }
 
+void DisplayComponent::SetColor(float r, float g, float b, float a)
+{
+	DisplayShader->SetUniform4f("u_color", r, g, b, a);
+}
+
+void DisplayComponent::SetTexture(const char* filename)
+{
+	if(DisplayTexture)
+		DisplayTexture->~Texture();
+	DisplayTexture = new Texture(filename);
+}
+
+void DisplayComponent::SetShader(const char* filename)
+{
+	//..
+}
+
 DisplayComponent::DisplayComponent()
 {
 	float vertices[] = {
-		-1.f, -1.f,		0.f, 0.f,
-		 1.f, -1.f,		1.f, 0.f,
-		 1.f, 1.f,		1.f, 1.f,
-		-1.f, 1.f,		0.f, 1.f		
+		-1.f * RATIO, -1.f,		0.f, 0.f,
+		 1.f * RATIO, -1.f,		1.f, 0.f,
+		 1.f * RATIO, 1.f,		1.f, 1.f,
+		-1.f * RATIO, 1.f,		0.f, 1.f
 	};
 	unsigned int indices[]{ 0, 1, 2, 2, 3, 0 };
 
@@ -43,6 +62,6 @@ void DisplayComponent::Loop(float deltaTime)
 {
 	if (Updated)
 	{
-		// to do
+
 	}
 }

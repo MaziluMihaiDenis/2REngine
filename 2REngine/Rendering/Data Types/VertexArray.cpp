@@ -28,6 +28,15 @@ VertexArray::VertexArray(float* vertices, unsigned int vsize, unsigned int* indi
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+VertexArray::~VertexArray()
+{
+	Unbind();
+	glDeleteBuffers(1, &VB_ID);
+	glDeleteBuffers(1, &IB_ID);
+	glDeleteVertexArrays(1, &VA_ID);
+	delete Indices;
+}
+
 void VertexArray::Bind()
 {
 	glBindVertexArray(VA_ID);

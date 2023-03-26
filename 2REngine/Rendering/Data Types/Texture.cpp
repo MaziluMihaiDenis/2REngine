@@ -3,6 +3,7 @@
 #include <Glad/glad.h>
 extern "C"
 {
+#include <Core/Types/Filesystem.h>
 #include <RECore.h>
 #include <Debug/debug.h>
 }
@@ -12,8 +13,9 @@ Texture::Texture(const char* filename)
 	unsigned char* data;
 	int channels;
 
-	data = stbi_load(filename, &Width, &Height, &channels, 0);
-	FileName = filename;
+	read_reimptex(filename, &Config);
+	data = stbi_load(filename, &Config.Width, &Config.Height, &channels, 0);
+	Config.FileName = filename;
 	Slot = g_Slot;
 	g_Slot++;
 
@@ -26,15 +28,20 @@ Texture::Texture(const char* filename)
 	glGenTextures(1, &ID);
 	glBindTexture(GL_TEXTURE_2D, ID);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, Config.Wrapping);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, Config.Wrapping);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, Config.Filter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, Config.Filter);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, Config.ColorFormat, Config.Width, Config.Height, 0, Config.ColorFormat, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	stbi_image_free(data);
+}
+
+Texture::~Texture()
+{
+	glDeleteTextures(1, &ID);
 }
 
 void Texture::Bind()

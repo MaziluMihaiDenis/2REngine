@@ -30,6 +30,7 @@ int main()
 
     DisplayComponent* dc = new DisplayComponent();
     Renderer::GetInstance()->RegisterDisplayObject(dc);
+    dc->SetTexture("2REngine/SwagGorilla.png");
 
     while (mainWindow->running)
     {

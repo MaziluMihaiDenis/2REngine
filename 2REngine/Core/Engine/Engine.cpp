@@ -24,6 +24,7 @@ void Engine::Begin()
 		FirstStart();
 	WindowManager::GetInstance()->InitWindow();
 	stbi_set_flip_vertically_on_load(1);
+	import_texture("2REngine/SwagGorilla.png", NULL);
 }
 
 void Engine::Loop(float deltaTime)

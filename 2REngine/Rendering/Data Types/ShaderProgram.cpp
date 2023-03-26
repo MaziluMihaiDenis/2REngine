@@ -49,6 +49,17 @@ ShaderProgram::ShaderProgram(const char* vertexFn, const char* fragmentFn)
     glDeleteShader(VertexID);
     glDeleteShader(FragmentID);
 
+    Bind();
+
+    SetUniform4f("u_color", 1.f, 1.f, 1.f, 1.f);
+
+    Unbind();
+}
+
+ShaderProgram::~ShaderProgram()
+{
+    glDeleteProgram(ID);
+    delete this;
 }
 
 void ShaderProgram::Bind()
@@ -59,4 +70,49 @@ void ShaderProgram::Bind()
 void ShaderProgram::Unbind()
 {
     glUseProgram(0);
+}
+
+int ShaderProgram::GetLocation(const char* uniformName)
+{
+    return glGetUniformLocation(ID, uniformName);
+}
+
+void ShaderProgram::SetUniform4f(const char* uniformName, float a, float b, float c, float d)
+{
+    glUniform4f(GetLocation(uniformName), a, b, c, d);
+}
+
+void ShaderProgram::SetUniform3f(const char* uniformName, float a, float b, float c)
+{
+    glUniform3f(GetLocation(uniformName), a, b, c);
+}
+
+void ShaderProgram::SetUniform2f(const char* uniformName, float a, float b)
+{
+    glUniform2f(GetLocation(uniformName), a, b);
+}
+
+void ShaderProgram::SetUniform1f(const char* uniformName, float a)
+{
+    glUniform1f(GetLocation(uniformName), a);
+}
+
+void ShaderProgram::SetUniform4i(const char* uniformName, int a, int b, int c, int d)
+{
+    glUniform4i(GetLocation(uniformName), a, b, c, d);
+}
+
+void ShaderProgram::SetUniform3i(const char* uniformName, int a, int b, int c)
+{
+    glUniform3i(GetLocation(uniformName), a, b, c);
+}
+
+void ShaderProgram::SetUniform2i(const char* uniformName, int a, int b)
+{
+    glUniform2i(GetLocation(uniformName), a, b);
+}
+
+void ShaderProgram::SetUniform1i(const char* uniformName, int a)
+{
+    glUniform1i(GetLocation(uniformName), a);
 }

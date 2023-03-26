@@ -35,3 +35,9 @@ int _find_property(FILE** file, const char* path, const char* property);
 	returns the contents of a file as a string
 */
 char* get_file_contents(const char* filename);
+
+void read_reimptex(const char* path, struct TextureConfig* config);
+
+void import_texture(const char* file, struct TextureConfig* config);
+
+const char* make_path_to_file(const char* path, const char* extension);

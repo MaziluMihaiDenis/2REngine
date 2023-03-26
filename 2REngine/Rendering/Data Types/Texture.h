@@ -1,5 +1,6 @@
 #pragma once
 
+#include "TextureConfig.h"
 #include <string>
 
 static unsigned short g_Slot;
@@ -7,12 +8,12 @@ static unsigned short g_Slot;
 struct Texture
 {
 protected:
-	unsigned short Slot;
 	unsigned int ID;
-	int Width, Height;
-	const char* FileName;
+	unsigned short Slot;
+	TextureConfig Config;
 public:
 	Texture(const char* filename);
+	~Texture();
 	void Bind();
 	void Unbind();
 };

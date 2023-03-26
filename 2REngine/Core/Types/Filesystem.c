@@ -1,9 +1,12 @@
 #pragma once
 #include "Filesystem.h"
 #include "../Types/RECore.h"
+#include "../Types/StringFunctions.h"
 #include <direct.h>
 #include <stdarg.h>
 #include <string.h>
+#include <stb_image/stb_image.h>
+#include <Rendering/Data Types/TextureConfig.h>
 
 int sys_dir_exists(const char* path)
 {
@@ -33,7 +36,7 @@ int sys_mkdir(const char* path, const char* dir_name)
 
 int sys_write_file(const char* path, const char* format, ...)
 {
-    char *ptr, cpy[100];
+    char *ptr, cpy[100], *a;
     va_list args;
     FILE* file;
 
@@ -48,7 +51,7 @@ int sys_write_file(const char* path, const char* format, ...)
         switch (ptr[0])
         {
         case 's':
-            char* a = va_arg(args, char*);
+            a = va_arg(args, char*);
             fprintf(file, "%s", a);
             break;
         case 'd':
@@ -79,6 +82,7 @@ int sys_get_file_property_as_int(const char* path, const char* property)
         return -1;
 
     fscanf(fout, "%d", &value);
+    fclose(fout);
 
     return value;
 }
@@ -92,6 +96,7 @@ char* sys_get_file_property_as_string(const char* path, const char* property)
         return NULL;
 
     fscanf(fout, "%s", value);
+    fclose(fout);
 
     return value;
 }
@@ -105,6 +110,7 @@ float sys_get_file_property_as_float(const char* path, const char* property)
         return -1;
 
     fscanf(fout, "%f", &value);
+    fclose(fout);
 
     return value;
 }
@@ -128,13 +134,13 @@ int _find_property(FILE** file, const char* path, const char* property)
     return 0;
 }
 
-char* get_file_contents(const char* filename)
+char* get_file_contents(const char* path)
 {
     FILE *file;
     int character, i;
     char* fileCpy;
 
-    if ((file = fopen(filename, "r")) == NULL)
+    if ((file = fopen(path, "r")) == NULL)
         return NULL;
 
     if (!MALLOC(fileCpy, MAX_FILE_DIMM))
@@ -144,7 +150,55 @@ char* get_file_contents(const char* filename)
     while ((character = fgetc(file)) != EOF)
         fileCpy[i] = (char)character, i++;
     fileCpy[i] = '\0';
+    fclose(file);
 
     return fileCpy;
 }
- 
+
+void read_reimptex(const char* path, struct TextureConfig* config)
+{
+    FILE* file;
+    const char* newpath = make_path_to_file(path, ".reimptex");
+
+    if (!(file = fopen(newpath, "r")))
+        return;
+
+    fscanf(file, "%d%d%d", &config->Filter, &config->ColorFormat, &config->Wrapping);
+
+    fclose(file);
+}
+
+void import_texture(const char* path, struct TextureConfig* config)
+{
+    FILE* file;
+    const char* newpath = make_path_to_file(path, ".reimptex");
+
+    if (!(file = fopen(newpath, "a+")))
+        return;
+
+    if (fgetc(file) != EOF)
+        return;
+
+    if (config)
+        fprintf(file, "%d %d %d", config->Filter, config->ColorFormat, config->Wrapping);
+    else
+        fprintf(file, "%d %d %d", 0x2600, 0x1908, 0x2901);
+    
+    fclose(file);
+}
+
+const char* make_path_to_file(const char* path, const char* extension)
+{
+    char *imp_file_path, imp_file_name[256], imp_file_noext[256];
+    if (!MALLOC(imp_file_path, 256))
+        return NULL;
+
+    strcpy(imp_file_path, extract_path(path));
+    strcpy(imp_file_name, extract_name(path));
+    strcpy(imp_file_noext, remove_file_extension(imp_file_name));
+    strcat(imp_file_path, "/");
+    strcat(imp_file_path, imp_file_noext);
+    strcat(imp_file_path, extension);
+
+    return imp_file_path;
+}
