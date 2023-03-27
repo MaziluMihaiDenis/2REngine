@@ -6,6 +6,7 @@
 #include "Core/Engine/Classes/Component/DisplayComponent.h"
 #include "Rendering/Renderer/Renderer.h"
 #include <Constants.h>
+#include <Math/Matrix.h>
 
 int main()
 {
@@ -27,6 +28,16 @@ int main()
     PRINT(0, "%s", glGetString(GL_VERSION));
 
     delta = 0.0;
+
+    Matrix<int> mat = Matrix(1, 2, 2);
+    mat[0][1] = 2;
+    mat[1][0] = 7;
+    mat[1][1] = 3;
+    Matrix<int> mat1 = Matrix(-1, 2, 1);
+    mat1[1][0] = 9;
+    Matrix<int> r = Matrix(0, 0, 0);
+    r = mat * mat1;
+    r.Print();
 
     DisplayComponent* dc = new DisplayComponent();
     Renderer::GetInstance()->RegisterDisplayObject(dc);

@@ -54,7 +54,7 @@ DisplayComponent::DisplayComponent()
 	unsigned int indices[]{ 0, 1, 2, 2, 3, 0 };
 
 	DisplayVertexArray = new VertexArray(vertices, sizeof(vertices), indices, sizeof(indices));
-	DisplayShader = new ShaderProgram("2Rengine/Shaders/default_vertex.glsl", "2Rengine/Shaders/default_fragment.glsl");
+	DisplayShader = new ShaderProgram("2Rengine/Rendering/Shaders/default_vertex.glsl", "2Rengine/Rendering/Shaders/default_fragment.glsl");
 	DisplayTexture = new Texture("2Rengine/SwagGorilla.png");
 }
 

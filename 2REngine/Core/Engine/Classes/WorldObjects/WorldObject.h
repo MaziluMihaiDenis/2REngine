@@ -1,7 +1,7 @@
 #pragma once
 
 #include "EmptyWorldObject.h"
-#include "../../../Types/Transformation2D.h"
+#include <Transformation2D.h>
 
 class WorldObject : public EmptyWorldObject
 {
