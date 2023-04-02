@@ -1,58 +1,33 @@
+#include <Graphics/Graphics.h>
+#include <Application/Application.h>
+#include <Engine/Engine.h>
+#include <Debug/debug.h>
+#include <External/Glad/glad.h>
+#include <Application/Core/internal.h>
+#include <Resources/TextureImporter.h>
 #include "2relibrary.h"
-#include "Core/Engine/WindowManager.h"
-#include "Core/Engine/Engine.h"
-#include "External/Glad/glad.h"
-#include "Core/Types/Debug/debug.h"
-#include "Core/Engine/Classes/Component/DisplayComponent.h"
-#include "Rendering/Renderer/Renderer.h"
-#include <Constants.h>
-#include <Math/Matrix.h>
 
 int main()
 {
     float delta, startTime; 
 
-    REWindow* mainWindow;
-    int winWidth, winHeight;
+    Engine::GetInstance()->Init();
+    Application::GetInstance()->Init();
+    Graphics::GetInstance()->Init();
+    TextureImporter::Init();
 
-    re_init();
-    Engine::GetInstance()->Begin();
-
-    mainWindow = WindowManager::GetInstance()->GetWindow(0);
-    winWidth = mainWindow->settings->width;
-    winHeight = mainWindow->settings->height;
-
-    re_set_context_current(mainWindow);
-    glViewport(0, 0, winWidth, winHeight); 
-
-    PRINT(0, "%s", glGetString(GL_VERSION));
+    Application::GetInstance()->SetBackgroundColor(NICE_COLOR);
 
     delta = 0.0;
 
-    Matrix<int> mat = Matrix(1, 2, 2);
-    mat[0][1] = 2;
-    mat[1][0] = 7;
-    mat[1][1] = 3;
-    Matrix<int> mat1 = Matrix(-1, 2, 1);
-    mat1[1][0] = 9;
-    Matrix<int> r = Matrix(0, 0, 0);
-    r = mat * mat1;
-    r.Print();
+    PRINT(0, "%s", glGetString(GL_VERSION));
 
-    DisplayComponent* dc = new DisplayComponent();
-    Renderer::GetInstance()->RegisterDisplayObject(dc);
-    dc->SetTexture("2REngine/SwagGorilla.png");
-
-    while (mainWindow->running)
+    while (Application::GetInstance()->IsRunning())
     {
         startTime = re_get_time_ms();
 
-        re_set_window_color(NICE_COLOR);
-        re_poll_events();
-
         Engine::GetInstance()->Loop(delta);
-
-        re_swap_buffers(mainWindow);
+        Application::GetInstance()->Loop();
 
         delta = 1.f * (re_get_time_ms() - startTime) / re_get_time_frequency();
     }
