@@ -18,13 +18,14 @@ int sys_mkdir(const char* path, const char* dir_name)
     char* full;
     int success;
 
-    if (!(full = mem_alloc(strlen(path) + strlen(dir_name) + 3, "sys_mkdir_string")))
+    if (!(full = mem_alloc(strlen(path) + strlen(dir_name) + 3, NAME(full))))
         return 0;
 
     success = 0;
     strcpy(full, path);
     strcat(full, "\\");
     strcat(full, dir_name);
+    FREE(full);
 
     success = _mkdir(full);
 
@@ -131,6 +132,7 @@ int _find_property(FILE** file, const char* path, const char* property)
             fscanf(*file, "%s", output);
             return 1;
         }
+    FREE(output);
     return 0;
 }
 

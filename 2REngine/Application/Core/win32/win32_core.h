@@ -32,6 +32,8 @@ void _win32_terminate();
 DBool _win32_init();
 
 void _win32_poll_events();
+void _win32_process_input(UINT Msg);
+
 DBool _win32_create_window(struct REWindow* window, struct REWindowSettings* winSet, struct REContextSettings* ctxSet);
 DBool _win32_create_window_instance(struct REWindow* window, struct REWindowSettings* windowSettings);
 void _win32_free_window(struct REWindow* window);

@@ -18,6 +18,7 @@ public:
 public:
 	bool IsRunning();
 	void Init();
+	void PreLoop();
 	void Loop();
 	void SetBackgroundColor(float red, float green, float blue, float alpha);
 

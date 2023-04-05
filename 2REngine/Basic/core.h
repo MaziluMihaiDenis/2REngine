@@ -6,6 +6,7 @@
 
 #define MALLOC(ptr, size) ((ptr = mem_alloc(size, #ptr)) != NULL)	
 #define FREE(ptr) mem_free(ptr, #ptr)
+#define NAME(y) #y
 
 #define DEBUG_MODE_ENABLED 0
 

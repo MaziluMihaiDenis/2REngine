@@ -10,8 +10,6 @@ typedef struct REContext REContext;
 typedef struct RESystem RESystem;
 typedef struct REContextSettings REContextSettings;
 
-// TODO: Implement RESystem
-
 typedef void(*REKeyCallback)(int, int);
 
 struct REWindowSettings

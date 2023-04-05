@@ -4,24 +4,24 @@
 #include <stdio.h>
 #include <WinUser.h>
 
-unsigned char previousKeyState[256];
-
 LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-void _win32_process_input(UINT Msg);
 
 LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	REWindow* window = (REWindow*)GetPropW(hwnd, L"RE");
-	
-	_win32_process_input(uMsg);
+	REWindow* window = (REWindow*)GetPropW(hwnd, L"RE2.0");
 
 	if (window)
 	{
 		switch (uMsg)
 		{
+		case WM_KEYUP:
+		case WM_KEYDOWN:
+			_win32_process_input(uMsg);
+			break;
 		case WM_CLOSE:
-		case WM_DESTROY:
+			PostQuitMessage(0);
 			window->running = FALSE;
+			DestroyWindow(window->win32->windowHandle);
 			break;
 		}
 	}
@@ -29,6 +29,9 @@ LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
 	{
 		switch (uMsg)
 		{
+		case WM_CLOSE:
+			DestroyWindow(hwnd);
+			break;
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
@@ -84,61 +87,30 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 	);
 
 	if (win32_window->windowHandle == NULL)
-	{
 		return FALSE;
-	}
+
+	if(windowSettings->focused)
+		SetPropW(win32_window->windowHandle, L"RE2.0", window);
 
 	if (windowSettings->visible)
-	{
 		ShowWindow(win32_window->windowHandle, SW_SHOW);
-		SetPropW(win32_window->windowHandle, L"RE", window);
-	}
 
 	window->win32 = win32_window;
 
 	return TRUE;
 }
 
-void _win32_process_input(UINT Msg)
-{
-	unsigned char keys[256];
-
-	if (!GetKeyboardState(keys))
-		return;
-
-	for (int i = 48; i < 90; i++)
-		if (Msg == WM_KEYDOWN && GetAsyncKeyState(i))
-		{
-			if (relib.callbacks.key != NULL)
-			{
-				if (GetAsyncKeyState(i) !=
-					previousKeyState[i])
-					relib.callbacks.key(i, 1);
-				relib.callbacks.key(i, 2);
-			}
-		}
-		else if(Msg == WM_KEYUP && previousKeyState[i] != keys[i])
-		{
-			if (relib.callbacks.key != NULL)
-				relib.callbacks.key(i, 0);
-		}
-
-
-	for (int i = 48; i < 90; i++)
-		previousKeyState[i] = GetAsyncKeyState(i);
-}
-
 void _win32_poll_events()
 {
-	if (!relib.windows[0])
+	if (!relib.main_window)
 		return;
 
 	MSG msg = { 0 };
 
-	while (PeekMessageW(&msg, 0, 0, 0, PM_REMOVE) > 0)
+	while (PeekMessage(&msg, 0, 0, 0, PM_REMOVE) > 0)
 	{
 		TranslateMessage(&msg);
-		DispatchMessageW(&msg);
+		DispatchMessage(&msg);
 	}
 }
 

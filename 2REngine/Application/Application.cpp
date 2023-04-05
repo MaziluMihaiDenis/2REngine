@@ -30,8 +30,6 @@ void Application::Init()
 	const char* title;
 	REWindowSettings* settings;
 
-	re_init();
-
 	// First start
 	if (sys_mkdir(SAVED_PATH, "mylifebelike") == 1)
 	{
@@ -63,17 +61,21 @@ void Application::Init()
 	re_set_context_current(InstanceWindow(settings, title, NULL, true));
 }
 
-void Application::Loop()
+void Application::PreLoop()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClearColor(
 		BackgroundColor.red,
-		BackgroundColor.green, 
-		BackgroundColor.blue, 
+		BackgroundColor.green,
+		BackgroundColor.blue,
 		BackgroundColor.alpha
 	);
 
 	re_poll_events();
+}
+
+void Application::Loop()
+{
 	re_swap_buffers(GetWindowInstance());
 }
 

@@ -17,7 +17,7 @@ ShaderProgram::ShaderProgram(const char* vertexFn, const char* fragmentFn)
     glGetShaderiv(VertexID, GL_COMPILE_STATUS, &success);
     if (success == 0)
     {
-        PRINT(SV_WARNING, "Vertex Shader Could Not Be Compiled: %s", vertexFn);
+        PRINT(SV_ERROR, "Vertex Shader Could Not Be Compiled: %s", vertexFn);
         PRINT(SV_WARNING, "%s", vertexSrc);
     }
 
@@ -39,6 +39,9 @@ ShaderProgram::ShaderProgram(const char* vertexFn, const char* fragmentFn)
     {
         PRINT(SV_ERROR, "%s", "Program Could Not Link");
     }
+
+    ZeroMemory((void*)vertexSrc, 3000);
+    ZeroMemory((void*)fragmentSrc, 3000);
 
     glDeleteShader(VertexID);
     glDeleteShader(FragmentID);

@@ -22,9 +22,9 @@ void DisplayComponent::Render()
 
 	glDrawElements(
 		GL_TRIANGLES, 
-		DisplayVertexArray->IndicesSize, 
+		6,
 		GL_UNSIGNED_INT, 
-		DisplayVertexArray->Indices
+		0
 	);
 
 	Unbind();
@@ -32,6 +32,7 @@ void DisplayComponent::Render()
 
 void DisplayComponent::SetColor(float r, float g, float b, float a)
 {
+	DisplayShader->Bind();
 	DisplayShader->SetUniform4f("u_color", r, g, b, a);
 }
 
@@ -49,28 +50,14 @@ void DisplayComponent::SetShader(const char* filename)
 
 void DisplayComponent::BufferData(Transformation2D& transform)
 {
-	float* matrix = transform.GetMatrix();
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	for (int j = 0; j < 4; j++)
-	//		printf("%f ", matrix[4 * i + j]);
-	//	printf("\n");
-	//}
 	glUseProgram(DisplayShader->ID);
-	glUniformMatrix4fv(DisplayShader->GetLocation("matrix"), 1, GL_FALSE, matrix);
+	glUniformMatrix4fv(DisplayShader->GetLocation("matrix"), 1, GL_FALSE, transform.GetMatrix());
 }
 
 void DisplayComponent::SetProjection(float* projection)
 {
 	glUseProgram(DisplayShader->ID);
-	float* matrix = projection;
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-			printf("%f ", matrix[4 * i + j]);
-		printf("\n");
-	}
-	glUniformMatrix4fv(DisplayShader->GetLocation("projection"), 1, GL_FALSE, matrix);
+	glUniformMatrix4fv(DisplayShader->GetLocation("projection"), 1, GL_FALSE, projection);
 }
 
 DisplayComponent::DisplayComponent()
@@ -84,8 +71,8 @@ DisplayComponent::DisplayComponent()
 	unsigned int indices[]{ 0, 1, 2, 2, 3, 0 };
 
 	DisplayVertexArray = new VertexArray(vertices, sizeof(vertices), indices, sizeof(indices));
-	DisplayShader = new ShaderProgram("2Rengine/Rendering/Shaders/default_vertex.glsl", "2Rengine/Rendering/Shaders/default_fragment.glsl");
-	DisplayTexture = new Texture("2Rengine/SwagGorilla.png");
+	DisplayShader = new ShaderProgram("2REngine/Resources/Shaders/default_vertex.glsl", "2REngine/Resources/Shaders/default_fragment.glsl");
+	DisplayTexture = new Texture("2REngine/Resources/Textures/SwagGorilla.png");
 }
 
 void DisplayComponent::Loop(float deltaTime)

@@ -1,10 +1,14 @@
 #include "VertexArray.h"
 #include <External/Glad/glad.h>
+extern "C"
+{
+#include <Basic/core.h>
+}
 
 VertexArray::VertexArray(float* vertices, unsigned int vsize, unsigned int* indices, unsigned int isize)
 {
 	Indices = indices;
-	IndicesSize = isize;
+	IndicesSize = isize / sizeof(unsigned int);
 
 	glGenVertexArrays(1, &VA_ID);
 	glGenBuffers(1, &IB_ID);
@@ -34,7 +38,7 @@ VertexArray::~VertexArray()
 	glDeleteBuffers(1, &VB_ID);
 	glDeleteBuffers(1, &IB_ID);
 	glDeleteVertexArrays(1, &VA_ID);
-	delete Indices;
+	FREE(Indices);
 }
 
 void VertexArray::Bind()
