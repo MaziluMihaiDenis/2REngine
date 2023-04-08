@@ -1,11 +1,12 @@
 #include "string_functions.h"
-#include <malloc.h>
 #include <stdlib.h>
+#include <Basic/core.h>
 
 wchar_t* char_to_wchar_t(char* string)
 {
 	int size = strlen(string) + 1;
-	wchar_t* wstring = malloc(size * sizeof(wchar_t));
+	wchar_t* wstring;
+	MALLOC(wstring, size, wchar_t);
 	mbstowcs(wstring, string, size);
 	return wstring;
 }

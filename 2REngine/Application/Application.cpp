@@ -28,7 +28,7 @@ void Application::Init()
 {
 	REWindowSettings* settings;
 	int width, height;
-	char* title = (char*)mem_alloc(256, NAME(title));
+	char title[256];
 
 	char* save, * config;
 	char s[] = "C:\\Users\\%USER%\\AppData\\Local";
@@ -58,7 +58,8 @@ void Application::Init()
 	height = sys_get_file_property_as_int(CONFIG_PATH, CONFIG_WINDOW_HEIGHT);
 	strcpy(title, sys_get_file_property_as_string(CONFIG_PATH, CONFIG_WINDOW_TITLE));
 
-	if (!(settings = (REWindowSettings*)mem_alloc(sizeof(settings), NAME(settings))))
+	MALLOC(settings, 1, REWindowSettings);
+	if (!settings)
 		return;
 
 	settings->width = width;

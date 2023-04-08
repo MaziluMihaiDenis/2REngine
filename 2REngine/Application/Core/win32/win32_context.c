@@ -76,10 +76,13 @@ DBool _win32_create_context(REWindow* window, REContextSettings* settings)
 	win32Context* win32_context;
 	HDC dc = GetDC(window->win32->windowHandle);
 
-	if (!MALLOC(win32_context, sizeof(win32Context)))
+	MALLOC(win32_context, 1, win32Context);
+	MALLOC(context, 1, REContext);
+
+	if (!win32_context)
 		return FALSE;
 
-	if (!MALLOC(context, sizeof(REContext)))
+	if (!context)
 	{
 		FREE(win32_context);
 		return FALSE;
@@ -93,6 +96,8 @@ DBool _win32_create_context(REWindow* window, REContextSettings* settings)
 			WGL_CONTEXT_PROFILE_MASK_ARB, settings->profile,
 			settings->forward
 		};
+
+		FREE(settings)
 
 		_wgl_choose_pixel_format(window);
 		win32_context->hglrc = wglCreateContextAttribsARB(dc, 0, openGLAttributes); // NULL
@@ -127,7 +132,9 @@ DBool _win32_init_gl()
 	REWindow* window;
 	REWindowSettings wind_settings = { 0 };
 
-	if (!MALLOC(window, sizeof(REWindow)))
+	MALLOC(window, 1, REWindow);
+
+	if (!window)
 		return FALSE;
 
 	window->name = L"?";

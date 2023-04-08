@@ -63,7 +63,8 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 	win32Window* win32_window;
 	WNDCLASS wndClass = { 0 };
 
-	if (!MALLOC(win32_window, sizeof(win32Window)))
+	MALLOC(win32_window, 1, win32Window);
+	if (!win32_window)
 		return FALSE;
 
 	wndClass.lpfnWndProc = _win32_win_procedure;
@@ -99,6 +100,7 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 	if (windowSettings->visible)
 		ShowWindow(win32_window->windowHandle, SW_SHOW);
 
+	FREE(wideTitle);
 	window->win32 = win32_window;
 
 	return TRUE;

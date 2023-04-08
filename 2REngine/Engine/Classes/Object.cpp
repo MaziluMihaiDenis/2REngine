@@ -11,5 +11,5 @@ void Object::Loop(float deltaTime) {}
 void Object::Destroy(float time) 
 {
     if (time == 0.f)
-        FREE(this);
+        delete this;
 }

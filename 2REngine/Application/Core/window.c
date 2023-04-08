@@ -5,9 +5,12 @@ REWindow* re_create_window(REWindowSettings* settings, const char* title, DBool 
 	REWindow* window;
 	REContextSettings* ctxsettings;
 
-	if (!MALLOC(window, sizeof(REWindow)))
+	MALLOC(window, 1, REWindow);
+	MALLOC(ctxsettings, 1, REContextSettings);
+
+	if (!window)
 		return NULL;
-	if (!MALLOC(ctxsettings, sizeof(REContextSettings)))
+	if (!ctxsettings)
 	{
 		FREE(window);
 		return NULL;

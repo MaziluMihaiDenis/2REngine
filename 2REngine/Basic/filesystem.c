@@ -17,7 +17,7 @@ char* get_env_path(char* path)
 {
     char *p, *full, *user;
 
-    full = mem_alloc(strlen(path) + 1, NAME(full));
+    MALLOC(full, strlen(path) + 1, char);
     user = getenv("USERNAME");
     p = strtok(path, "%");
 
@@ -35,7 +35,8 @@ int sys_mkdir(const char* path, const char* dir_name, char* full_path)
     char* full;
     int success;
 
-    if (!(full = mem_alloc(strlen(path) + strlen(dir_name) + 3, NAME(full))))
+    MALLOC(full, strlen(path) + strlen(dir_name) + 3, char);
+    if (!full)
         return 0;
 
     success = 0;
@@ -142,7 +143,9 @@ int _find_property(FILE** file, const char* path, const char* property)
     if ((*file = fopen(path, "r")) == NULL)
         return 0;
 
-    if((output = mem_alloc(256, "_system_find_property_input")) == NULL)
+    MALLOC(output, 256, char);
+
+    if(!output)
         return 0;
 
     while (fscanf(*file, "%s", output))
@@ -164,7 +167,8 @@ char* get_file_contents(const char* path)
     if ((file = fopen(path, "r")) == NULL)
         return NULL;
 
-    if (!MALLOC(fileCpy, MAX_FILE_DIMM))
+    MALLOC(fileCpy, MAX_FILE_DIMM, char);
+    if (!fileCpy)
         return NULL;
 
     i = 0;
@@ -219,7 +223,6 @@ const char* make_path_to_file(const char* path, const char* extension)
     strcat(imp_file_path, "\\");
     strcat(imp_file_path, imp_file_noext);
     strcat(imp_file_path, extension);
-    imp_file_path[strlen(imp_file_path) + 1] = '\0';
 
     return imp_file_path;
 }
