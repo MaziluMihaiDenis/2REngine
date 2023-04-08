@@ -141,7 +141,7 @@ DBool _win32_init_gl()
 	if (!gladLoadGL())
 		return FALSE;
 
-	_win32_destroy_context(window);
+	re_destroy_context(window);
 	FREE(window->win32);
 	FREE(window);
 
@@ -152,6 +152,7 @@ void _win32_destroy_context(struct REWindow* window)
 {
 	_win32_set_context_current(NULL);
 	wglDeleteContext(window->context->win32->hglrc);
+	FREE(window->context->win32);
 }
 
 void _win32_swap_buffers(REWindow* window)

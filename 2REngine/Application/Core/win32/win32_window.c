@@ -23,7 +23,7 @@ LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
 			window->running = FALSE;
 			PostQuitMessage(0);
 			DestroyWindow(window->win32->windowHandle);
-			return;
+			return 0;
 		}
 	}
 	else
@@ -32,7 +32,7 @@ LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
 		{
 		case WM_CLOSE:
 			DestroyWindow(hwnd);
-			break;
+			return 0;
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;

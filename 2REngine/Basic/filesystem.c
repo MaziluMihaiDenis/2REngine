@@ -192,8 +192,9 @@ void read_reimptex(const char* path, struct TextureConfig* config)
 void import_texture(const char* path, struct TextureConfig* config)
 {
     FILE* file;
-    const char* newpath = make_path_to_file(path, ".reimptex");
-
+    char newpath[256]; 
+    strcpy(newpath, make_path_to_file(path, ".reimptex"));
+    
     if (!(file = fopen(newpath, "a+")))
         return;
 
@@ -210,9 +211,7 @@ void import_texture(const char* path, struct TextureConfig* config)
 
 const char* make_path_to_file(const char* path, const char* extension)
 {
-    char *imp_file_path, imp_file_name[256], imp_file_noext[256];
-    if (!MALLOC(imp_file_path, 256))
-        return NULL;
+    char imp_file_path[256] = {0}, imp_file_name[256] = {0}, imp_file_noext[256] = {0};
 
     strcpy(imp_file_path, _extract_path(path));
     strcpy(imp_file_name, _extract_name(path));
@@ -220,6 +219,7 @@ const char* make_path_to_file(const char* path, const char* extension)
     strcat(imp_file_path, "\\");
     strcat(imp_file_path, imp_file_noext);
     strcat(imp_file_path, extension);
+    imp_file_path[strlen(imp_file_path) + 1] = '\0';
 
     return imp_file_path;
 }

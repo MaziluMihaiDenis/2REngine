@@ -1,5 +1,5 @@
 #include "TextureImporter.h"
-#include "TextureImporter.h"
+#include <Graphics/Structs/TextureConfig.h>
 extern "C"
 {
 #include <Basic/filesystem.h>
