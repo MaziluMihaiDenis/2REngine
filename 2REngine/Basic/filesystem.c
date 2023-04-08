@@ -13,7 +13,24 @@ int sys_dir_exists(const char* path)
     return 0;
 }
 
-int sys_mkdir(const char* path, const char* dir_name)
+char* get_env_path(char* path)
+{
+    char *p, *full, *user;
+
+    full = mem_alloc(strlen(path) + 1, NAME(full));
+    user = getenv("USERNAME");
+    p = strtok(path, "%");
+
+    strcpy(full, p);
+    p = strtok(NULL, "%");
+    strcat(full, user);
+    p = strtok(NULL, "%");
+    strcat(full, p);
+
+    return full;
+}
+
+int sys_mkdir(const char* path, const char* dir_name, char* full_path)
 {
     char* full;
     int success;
@@ -25,14 +42,15 @@ int sys_mkdir(const char* path, const char* dir_name)
     strcpy(full, path);
     strcat(full, "\\");
     strcat(full, dir_name);
-    FREE(full);
 
     success = _mkdir(full);
+    if(full_path != NULL)
+        strcpy(full_path, full);
+    FREE(full);
 
-    if (errno == EEXIST)
-        return -1;
-
-    return (success == 0) ? 1 : 0;
+    if (success == 0)
+        return 1;
+    return -1;
 }
 
 int sys_write_file(const char* path, const char* format, ...)
@@ -98,6 +116,7 @@ char* sys_get_file_property_as_string(const char* path, const char* property)
 
     fscanf(fout, "%s", value);
     fclose(fout);
+    FREE(fout);
 
     return value;
 }
@@ -195,10 +214,10 @@ const char* make_path_to_file(const char* path, const char* extension)
     if (!MALLOC(imp_file_path, 256))
         return NULL;
 
-    strcpy(imp_file_path, extract_path(path));
-    strcpy(imp_file_name, extract_name(path));
-    strcpy(imp_file_noext, remove_file_extension(imp_file_name));
-    strcat(imp_file_path, "/");
+    strcpy(imp_file_path, _extract_path(path));
+    strcpy(imp_file_name, _extract_name(path));
+    strcpy(imp_file_noext, _remove_file_extension(imp_file_name));
+    strcat(imp_file_path, "\\");
     strcat(imp_file_path, imp_file_noext);
     strcat(imp_file_path, extension);
 

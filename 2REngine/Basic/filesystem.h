@@ -5,9 +5,11 @@
 
 /* 
 	creates a directory at the specified path with the specified name
-	reutrns 1 for success, 0 path not found, -1 directory already exists
+	reutrns 1 for success, -1 for error
 */
-int sys_mkdir(const char* path, const char* dir_name);
+int sys_mkdir(const char* path, const char* dir_name, char* full_path);
+
+char* get_env_path(const char* path);
 
 // files
 /*

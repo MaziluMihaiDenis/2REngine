@@ -1,18 +1,16 @@
 #include "string_functions.h"
 #include <malloc.h>
-//#include <cstdlib>
-
-// TODO: Rework
+#include <stdlib.h>
 
 wchar_t* char_to_wchar_t(char* string)
 {
-	/*wchar_t* wstring = malloc(strlen(string) * sizeof(wchar_t));
-	mbstowcs(wstring, string, strlen(string) * sizeof(wchar_t));
-	return wstring;*/
-	return NULL;
+	int size = strlen(string) + 1;
+	wchar_t* wstring = malloc(size * sizeof(wchar_t));
+	mbstowcs(wstring, string, size);
+	return wstring;
 }
 
-char* extract_path(const char* filepath)
+char* _extract_path(const char* filepath)
 {
 	char *p, *n, cpy[256], unformattedCpy[256];
 
@@ -34,12 +32,12 @@ char* extract_path(const char* filepath)
 	return unformattedCpy;
 }
 
-char* remove_file_extension(const char* name)
+char* _remove_file_extension(const char* name)
 {
 	return strtok(name, ".");
 }
 
-char* extract_name(const char* filepath)
+char* _extract_name(const char* filepath)
 {
 	char* p, * n, cpy[256];
 

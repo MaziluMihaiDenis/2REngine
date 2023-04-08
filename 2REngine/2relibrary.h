@@ -24,8 +24,12 @@ extern "C"
 
 #pragma region PATHS
 
-#define SAVED_PATH "C:\\Users\\Giorno\\AppData\\Local"
-#define CONFIG_PATH "C:\\Users\\Giorno\\AppData\\Local\\Config\\engine.ini"
+// DO NOT MODIFY
+static char _saved_path[100] = "C:\\Users\\%USER%\\AppData\\Local";
+static char _config_path[100] = "C:\\Users\\%USER%\\AppData\\Local\\Config\\engine.ini";
+
+#define SAVED_PATH _saved_path
+#define CONFIG_PATH _config_path
 #define CONFIG_WINDOW_WIDTH "window\\width"
 #define CONFIG_WINDOW_HEIGHT "window\\height"
 #define CONFIG_WINDOW_TITLE "window\\title"

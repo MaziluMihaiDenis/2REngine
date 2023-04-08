@@ -1,8 +1,9 @@
 #include "win32_core.h"
 #include "../internal.h"
-#include <Basic/string_functions.h>
 #include <stdio.h>
 #include <WinUser.h>
+#include <Debug/debug.h>
+#include <Basic/string_functions.h>
 
 LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -19,10 +20,10 @@ LRESULT CALLBACK _win32_win_procedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARA
 			_win32_process_input(uMsg);
 			break;
 		case WM_CLOSE:
-			PostQuitMessage(0);
 			window->running = FALSE;
+			PostQuitMessage(0);
 			DestroyWindow(window->win32->windowHandle);
-			break;
+			return;
 		}
 	}
 	else
@@ -57,7 +58,7 @@ DBool _win32_create_window(struct REWindow* window, struct REWindowSettings* win
 
 DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSettings)
 {
-	const wchar_t* CLASS_NAME = L"RE2.0";
+	const wchar_t CLASS_NAME[] = L"RE2.0";
 	wchar_t* wideTitle;
 	win32Window* win32_window;
 	WNDCLASS wndClass = { 0 };
@@ -71,7 +72,10 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 
 	RegisterClass(&wndClass);
 
-	wideTitle = char_to_wchar_t(window->name);
+	if (window->name == NULL)
+		wideTitle = L"?";
+	else
+		wideTitle = char_to_wchar_t(window->name);
 
 	win32_window->windowHandle = CreateWindowEx(
 		windowSettings->style,

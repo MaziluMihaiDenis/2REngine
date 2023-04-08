@@ -125,10 +125,12 @@ DBool _win32_set_context_current(REWindow* window)
 DBool _win32_init_gl()
 {
 	REWindow* window;
-	REWindowSettings wind_settings = {0};
+	REWindowSettings wind_settings = { 0 };
 
 	if (!MALLOC(window, sizeof(REWindow)))
 		return FALSE;
+
+	window->name = L"?";
 
 	_win32_create_window(window, &wind_settings, NULL);
 	_win32_set_context_current(window);

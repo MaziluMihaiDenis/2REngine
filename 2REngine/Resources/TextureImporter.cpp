@@ -7,5 +7,5 @@ extern "C"
 
 void TextureImporter::Init()
 {
-	import_texture("2REngine/SwagGorilla.png", NULL);
+	import_texture("2REngine\\Resources\\Textures\\SwagGorilla.png", NULL);
 }
