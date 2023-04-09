@@ -12,7 +12,7 @@ REWindow* re_create_window(REWindowSettings* settings, const char* title, DBool 
 		return NULL;
 	if (!ctxsettings)
 	{
-		FREE(window);
+		FREE(window, 1, REWindow);
 		return NULL;
 	}
 
@@ -48,8 +48,8 @@ void re_free_window(REWindow* window)
 	relib.platform->platform_free_window(window);
 	relib.windows[window->index] = relib.windows[relib.windows_count - 1];
 	relib.windows_count--;
-	FREE(window->settings);
-	FREE(window);
+	FREE(window->settings, 1, REWindowSettings);
+	FREE(window, 1, REWindow);
 }
 
 int re_add_window_hints(int attrib, int value)

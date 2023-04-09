@@ -38,7 +38,7 @@ VertexArray::~VertexArray()
 	glDeleteBuffers(1, &VB_ID);
 	glDeleteBuffers(1, &IB_ID);
 	glDeleteVertexArrays(1, &VA_ID);
-	FREE(Indices);
+	FREE(Indices, IndicesSize, unsigned int);
 }
 
 void VertexArray::Bind()

@@ -33,9 +33,10 @@ char* get_env_path(char* path)
 int sys_mkdir(const char* path, const char* dir_name, char* full_path)
 {
     char* full;
-    int success;
+    int success, size;
+    size = strlen(path) + strlen(dir_name) + 3;
 
-    MALLOC(full, strlen(path) + strlen(dir_name) + 3, char);
+    MALLOC(full, size, char);
     if (!full)
         return 0;
 
@@ -47,7 +48,7 @@ int sys_mkdir(const char* path, const char* dir_name, char* full_path)
     success = _mkdir(full);
     if(full_path != NULL)
         strcpy(full_path, full);
-    FREE(full);
+    FREE(full, size, char);
 
     if (success == 0)
         return 1;
@@ -117,7 +118,6 @@ char* sys_get_file_property_as_string(const char* path, const char* property)
 
     fscanf(fout, "%s", value);
     fclose(fout);
-    FREE(fout);
 
     return value;
 }
@@ -154,7 +154,7 @@ int _find_property(FILE** file, const char* path, const char* property)
             fscanf(*file, "%s", output);
             return 1;
         }
-    FREE(output);
+    FREE(output, 256, char);
     return 0;
 }
 
@@ -162,7 +162,7 @@ char* get_file_contents(const char* path)
 {
     FILE *file;
     int character, i;
-    char* fileCpy;
+    char *fileCpy;
 
     if ((file = fopen(path, "r")) == NULL)
         return NULL;
@@ -183,7 +183,8 @@ char* get_file_contents(const char* path)
 void read_reimptex(const char* path, struct TextureConfig* config)
 {
     FILE* file;
-    const char* newpath = make_path_to_file(path, ".reimptex");
+    char newpath[256]; 
+    strcpy(newpath, make_path_to_file(path, ".reimptex"));
 
     if (!(file = fopen(newpath, "r")))
         return;
@@ -196,9 +197,9 @@ void read_reimptex(const char* path, struct TextureConfig* config)
 void import_texture(const char* path, struct TextureConfig* config)
 {
     FILE* file;
-    char newpath[256]; 
+    char newpath[256];
     strcpy(newpath, make_path_to_file(path, ".reimptex"));
-    
+
     if (!(file = fopen(newpath, "a+")))
         return;
 

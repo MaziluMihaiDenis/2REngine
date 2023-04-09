@@ -50,7 +50,7 @@ DBool _win32_create_window(struct REWindow* window, struct REWindowSettings* win
 	}
 	if (!_win32_create_context(window, ctxSet))
 	{
-		FREE(window->win32);
+		FREE(window->win32, 1, win32Window);
 		return FALSE;
 	}
 	return TRUE;
@@ -59,7 +59,6 @@ DBool _win32_create_window(struct REWindow* window, struct REWindowSettings* win
 DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSettings)
 {
 	const wchar_t CLASS_NAME[] = L"RE2.0";
-	wchar_t* wideTitle;
 	win32Window* win32_window;
 	WNDCLASS wndClass = { 0 };
 
@@ -73,15 +72,10 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 
 	RegisterClass(&wndClass);
 
-	if (window->name == NULL)
-		wideTitle = L"?";
-	else
-		wideTitle = char_to_wchar_t(window->name);
-
 	win32_window->windowHandle = CreateWindowEx(
 		windowSettings->style,
 		CLASS_NAME,
-		wideTitle,
+		char_to_wchar_t(window->name),
 		WS_OVERLAPPEDWINDOW,
 		windowSettings->offsetX, windowSettings->offsetY,
 		windowSettings->width, windowSettings->height,
@@ -100,7 +94,6 @@ DBool _win32_create_window_instance(REWindow* window, REWindowSettings* windowSe
 	if (windowSettings->visible)
 		ShowWindow(win32_window->windowHandle, SW_SHOW);
 
-	FREE(wideTitle);
 	window->win32 = win32_window;
 
 	return TRUE;
@@ -122,6 +115,6 @@ void _win32_poll_events()
 
 void _win32_free_window(REWindow* window)
 {
-	FREE(window->win32);
+	FREE(window->win32, 1, win32Window);
 }
 

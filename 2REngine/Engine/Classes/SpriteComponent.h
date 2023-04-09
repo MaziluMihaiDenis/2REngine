@@ -5,7 +5,7 @@
 #include <Graphics/Structs/ShaderProgram.h>
 #include <Graphics/Structs/Texture.h>
 
-class DisplayComponent : public Component
+class SpriteComponent : public Component
 {
 	friend class Graphics;
 
@@ -27,6 +27,6 @@ public:
 	void SetProjection(float* projection);
 
 public:
-	DisplayComponent();
+	SpriteComponent();
 	virtual void Loop(float deltaTime) override;
 };

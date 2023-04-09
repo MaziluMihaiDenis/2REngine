@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/Classes/DisplayComponent.h>
+#include <Engine/Classes/SpriteComponent.h>
 #include <vector>
 
 class Graphics
@@ -8,14 +8,14 @@ class Graphics
 	friend class Engine;
 private:
 	static inline Graphics* Instance;
-	std::vector<DisplayComponent*> RegisteredObjects;
+	std::vector<SpriteComponent*> RegisteredObjects;
 
 public:
 	void Init();
 	void Loop();
 public:
-	void RegisterDisplayObject(DisplayComponent* object);
-	void UnregisterDisplayObject(DisplayComponent* object);
+	void RegisterDisplayObject(SpriteComponent* object);
+	void UnregisterDisplayObject(SpriteComponent* object);
 public:
 	static Graphics* GetInstance();
 };

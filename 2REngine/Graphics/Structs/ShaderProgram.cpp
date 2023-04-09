@@ -5,8 +5,8 @@ ShaderProgram::ShaderProgram(const char* vertexFn, const char* fragmentFn)
 {
     int success = 0;
     
-    const char* vertexSrc = get_file_contents(vertexFn);
-    const char* fragmentSrc = get_file_contents(fragmentFn);
+    char* vertexSrc = get_file_contents(vertexFn);
+    char* fragmentSrc = get_file_contents(fragmentFn);
 
     ID = glCreateProgram();
     VertexID = glCreateShader(GL_VERTEX_SHADER);
@@ -40,8 +40,8 @@ ShaderProgram::ShaderProgram(const char* vertexFn, const char* fragmentFn)
         PRINT(SV_ERROR, "%s", "Program Could Not Link");
     }
 
-    ZeroMemory((void*)vertexSrc, 3000);
-    ZeroMemory((void*)fragmentSrc, 3000);
+    FREE(vertexSrc, MAX_FILE_DIMM, char);
+    FREE(fragmentSrc, MAX_FILE_DIMM, char);
 
     glDeleteShader(VertexID);
     glDeleteShader(FragmentID);

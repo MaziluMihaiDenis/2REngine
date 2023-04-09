@@ -1,22 +1,22 @@
-#include "DisplayComponent.h"
+#include "SpriteComponent.h"
 #include "../Structs/Transformation2D.h"
 #include <External/Glad/glad.h>
 
-void DisplayComponent::Bind()
+void SpriteComponent::Bind()
 {
 	DisplayVertexArray->Bind();
 	DisplayShader->Bind();
 	DisplayTexture->Bind();
 }
 
-void DisplayComponent::Unbind()
+void SpriteComponent::Unbind()
 {
 	DisplayVertexArray->Unbind();
 	DisplayShader->Unbind();
 	DisplayTexture->Unbind();
 }
 
-void DisplayComponent::Render()
+void SpriteComponent::Render()
 {
 	Bind();
 
@@ -30,37 +30,39 @@ void DisplayComponent::Render()
 	Unbind();
 }
 
-void DisplayComponent::SetColor(float r, float g, float b, float a)
+void SpriteComponent::SetColor(float r, float g, float b, float a)
 {
 	DisplayShader->Bind();
 	DisplayShader->SetUniform4f("u_color", r, g, b, a);
 }
 
-void DisplayComponent::SetTexture(const char* filename)
+void SpriteComponent::SetTexture(const char* filename)
 {
 	if(DisplayTexture)
 		DisplayTexture->~Texture();
 	DisplayTexture = new Texture(filename);
 }
 
-void DisplayComponent::SetShader(const char* filename)
+void SpriteComponent::SetShader(const char* filename)
 {
 	//..
 }
 
-void DisplayComponent::BufferData(Transformation2D& transform)
+void SpriteComponent::BufferData(Transformation2D& transform)
 {
+	float* matrix = transform.GetMatrix();
 	glUseProgram(DisplayShader->ID);
-	glUniformMatrix4fv(DisplayShader->GetLocation("matrix"), 1, GL_FALSE, transform.GetMatrix());
+	glUniformMatrix4fv(DisplayShader->GetLocation("matrix"), 1, GL_FALSE, matrix);
+	delete matrix;
 }
 
-void DisplayComponent::SetProjection(float* projection)
+void SpriteComponent::SetProjection(float* projection)
 {
 	glUseProgram(DisplayShader->ID);
 	glUniformMatrix4fv(DisplayShader->GetLocation("projection"), 1, GL_FALSE, projection);
 }
 
-DisplayComponent::DisplayComponent()
+SpriteComponent::SpriteComponent()
 {
 	float vertices[] = {
 		-1.f, -1.f,		0.f, 0.f,
@@ -72,10 +74,10 @@ DisplayComponent::DisplayComponent()
 
 	DisplayVertexArray = new VertexArray(vertices, sizeof(vertices), indices, sizeof(indices));
 	DisplayShader = new ShaderProgram("2REngine/Resources/Shaders/default_vertex.glsl", "2REngine/Resources/Shaders/default_fragment.glsl");
-	DisplayTexture = new Texture("2REngine/Resources/Textures/SwagGorilla.png");
+	DisplayTexture = new Texture("2REngine\\Resources\\Textures\\SwagGorilla.png");
 }
 
-void DisplayComponent::Loop(float deltaTime)
+void SpriteComponent::Loop(float deltaTime)
 {
 	if (Updated)
 	{

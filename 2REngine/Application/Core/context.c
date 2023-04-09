@@ -16,5 +16,5 @@ void re_swap_buffers(REWindow* window)
 void re_destroy_context(REWindow* window)
 {
 	relib.platform->platform_destroy_context(window);
-	FREE(window->context);
+	FREE(window->context, 1, REContext);
 }

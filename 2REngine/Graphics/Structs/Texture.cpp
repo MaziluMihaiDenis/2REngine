@@ -15,7 +15,7 @@ Texture::Texture(const char* filename)
 	if (!data)
 	{
 		PRINT(SV_ERROR, "NO TEXTURE DATA IN FILE: %s", filename);
-		FREE(data);
+		return;
 	}
 
 	glGenTextures(1, &ID);

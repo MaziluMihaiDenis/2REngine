@@ -15,6 +15,18 @@ void key_callback(int key, int state)
     }
 }
 
+void* operator new(size_t _Size)
+{
+    if(DEBUG_MODE_ENABLED)
+        printf("ALLOCATING %d BYTES TO %s\n", _Size, "new block");
+    return malloc(_Size);
+}
+
+void operator delete(void* block, size_t _Size)
+{
+    FREE(block, _Size, char);
+}
+
 int main()
 {
     float delta;
@@ -34,16 +46,20 @@ int main()
 
     delta = 0.f;
 
+    float* projection = ortho(0, 0, 1920, 1080);
+
     Transformation2D trs;
     trs.Position = Vector2D(0, 0);
     trs.Size = Vector2D(300, 300);
     trs.Rotation = 0.f;
 
-    DisplayComponent* dc = new DisplayComponent();
+    SpriteComponent* dc = new SpriteComponent();
     Graphics::GetInstance()->RegisterDisplayObject(dc);
     dc->BufferData(trs);
     dc->SetColor(1, 1, 1);
-    dc->SetProjection(ortho(0, 0, 1920, 1080));
+    dc->SetProjection(projection);
+
+    delete projection;
 
     while (Application::GetInstance()->IsRunning())
     {

@@ -17,18 +17,18 @@ void Graphics::Init()
 
 void Graphics::Loop()
 {
-	for (DisplayComponent* object : RegisteredObjects)
+	for (SpriteComponent* object : RegisteredObjects)
 		object->Render();
 }
 
-void Graphics::RegisterDisplayObject(DisplayComponent* object)
+void Graphics::RegisterDisplayObject(SpriteComponent* object)
 {
 	RegisteredObjects.push_back(object);
 }
 
-void Graphics::UnregisterDisplayObject(DisplayComponent* object)
+void Graphics::UnregisterDisplayObject(SpriteComponent* object)
 {
-	for (std::vector<DisplayComponent*>::iterator i = RegisteredObjects.begin(); i != RegisteredObjects.end(); i++)
+	for (std::vector<SpriteComponent*>::iterator i = RegisteredObjects.begin(); i != RegisteredObjects.end(); i++)
 		if (*i == object)
 		{
 			RegisteredObjects.erase(i);

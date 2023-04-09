@@ -2,7 +2,7 @@
 
 struct VertexArray
 {
-	friend class DisplayComponent;
+	friend class SpriteComponent;
 private:
 	unsigned int VA_ID, VB_ID, IB_ID;
 	unsigned int IndicesSize;

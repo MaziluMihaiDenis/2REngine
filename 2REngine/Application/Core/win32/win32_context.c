@@ -84,7 +84,7 @@ DBool _win32_create_context(REWindow* window, REContextSettings* settings)
 
 	if (!context)
 	{
-		FREE(win32_context);
+		FREE(win32_context, 1, win32Context);
 		return FALSE;
 	}
 
@@ -97,7 +97,7 @@ DBool _win32_create_context(REWindow* window, REContextSettings* settings)
 			settings->forward
 		};
 
-		FREE(settings)
+		FREE(settings, 1, REContextSettings)
 
 		_wgl_choose_pixel_format(window);
 		win32_context->hglrc = wglCreateContextAttribsARB(dc, 0, openGLAttributes); // NULL
@@ -149,8 +149,8 @@ DBool _win32_init_gl()
 		return FALSE;
 
 	re_destroy_context(window);
-	FREE(window->win32);
-	FREE(window);
+	FREE(window->win32, 1, win32Window);
+	FREE(window, 1, REWindow);
 
 	return TRUE;
 }
@@ -159,7 +159,7 @@ void _win32_destroy_context(struct REWindow* window)
 {
 	_win32_set_context_current(NULL);
 	wglDeleteContext(window->context->win32->hglrc);
-	FREE(window->context->win32);
+	FREE(window->context->win32, 1, win32Context);
 }
 
 void _win32_swap_buffers(REWindow* window)

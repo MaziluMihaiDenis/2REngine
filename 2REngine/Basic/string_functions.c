@@ -2,11 +2,10 @@
 #include <stdlib.h>
 #include <Basic/core.h>
 
-wchar_t* char_to_wchar_t(char* string)
+wchar_t* char_to_wchar_t(char string[256])
 {
 	int size = strlen(string) + 1;
-	wchar_t* wstring;
-	MALLOC(wstring, size, wchar_t);
+	wchar_t wstring[256];
 	mbstowcs(wstring, string, size);
 	return wstring;
 }

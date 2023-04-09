@@ -11,16 +11,18 @@
 		printf("ALLOCATING %d BYTES TO %s\n", size * sizeof(TYPE), #ptr); \
 	ptr = (TYPE*)malloc(size * sizeof(TYPE)); \
 }
-#define FREE(ptr) \
+#define FREE(ptr, size, TYPE) \
 { \
+	if(ptr == NULL) \
+		return; \
 	if (DEBUG_MODE_ENABLED) \
-		printf("DEALLOCATING %d BYTES FROM %s\n", sizeof(ptr), #ptr); \
+		printf("DEALLOCATING %d BYTES FROM %s\n", size * sizeof(TYPE), #ptr); \
 	free(ptr); \
 	ptr = NULL; \
 }
 #define NAME(y) #y
 
-#define DEBUG_MODE_ENABLED 1
+#define DEBUG_MODE_ENABLED 0
 
 #define TRUE 1
 #define FALSE 0

@@ -2,7 +2,7 @@
 
 struct ShaderProgram
 {
-	friend class DisplayComponent;
+	friend class SpriteComponent;
 private:
 	unsigned int ID, VertexID, FragmentID;
 private:
